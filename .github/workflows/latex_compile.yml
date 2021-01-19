@@ -1,0 +1,73 @@
+# This is a basic workflow to help you get started with Actions
+
+name: compile pdf
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  buildPython:
+    runs-on: ubuntu-latest
+    container:
+      image: danteev/texlive
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Make the plots
+      run: |
+        cd code
+        gridspeccer --mplrc matplotlibrc
+    - name: 'Upload PDFs as artifacts'
+      uses: actions/upload-artifact@v2
+      with:
+        name: compiledFigPDFs
+        path: fig/*.pdf
+  buildPdf:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # only run after python figures are done
+    needs: buildPython
+    container:
+      image: danteev/texlive
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # download archived fig pdfs
+      - uses: actions/download-artifact@v2
+        with:
+          name: compiledFigPDFs
+          path: fig/
+
+      # compile pdf (also pure tikz figures)
+      - name: LaTeX compilation from makefile
+        run: make
+
+      - name: 'Upload main PDF as artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiledPDF
+          path: main.pdf
+      # push to other branch for retainig the pdfs
+      - name: save all stuff online
+        if: github.ref == 'refs/heads/main'
+        run: |
+          ls **/*.pdf || true
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add -f main.pdf
+          git add -f fig/*.pdf || true
+          git add -f fig_tikz/fig*/*.pdf || true
+          git checkout -b compiledPDF
+          git commit -m "new pdfs"
+          git push --force origin compiledPDF

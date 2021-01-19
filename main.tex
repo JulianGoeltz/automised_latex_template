@@ -1,0 +1,182 @@
+\documentclass[
+    10pt,
+    twocolumn,
+    ]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% Imports with important order
+\usepackage[utf8]{inputenc}
+\usepackage[
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    filecolor=black,
+    urlcolor=black,
+    plainpages=false,
+    pdfpagelabels,
+    breaklinks=true,
+    ]{hyperref}
+
+\usepackage[
+    natbib=true,
+    backend=bibtex,
+    style=nature,
+    citestyle=numeric-comp,
+    sorting=none,
+    giveninits=true,
+    uniquename=init
+]{biblatex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% alphabetical imports
+\usepackage{amsthm,amsmath,amsfonts, amssymb, amscd}
+\usepackage{bookmark}
+\usepackage{bbm}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
+\usepackage{cuted}
+\usepackage{enumitem}
+\usepackage[capitalize, nameinlink]{cleveref}
+\usepackage{geometry}
+\usepackage{glossaries-extra}
+\usepackage{graphicx}
+\usepackage{listings}                                % source/code listings
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{placeins}                                % to errect float barriers for figures
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{sidecap}
+\usepackage[binary-units]{siunitx}
+\usepackage{threeparttable}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{xspace}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% draft settings
+\usepackage{lipsum}
+% \usepackage{changes}  % to make changes obvious for mihai
+% \usepackage{lineno}
+% \linenumbers
+% \usepackage{todonotes}
+% \newcommand{\todoin}[1]{\todo[inline,color=yellow]{#1}}
+% \newcommand{\todosolved}[1]{\todo[inline, color=green]{#1}}
+% \newcommand{\todourgent}[1]{\todo[inline, color=lightgray]{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% Define stuff
+% various stuff
+\bookmarksetup{depth=4}
+% colors
+\definecolor{lightgrey}{gray}{0.9}
+% cref
+\crefname{equation}{Eqn.}{Eqns.}
+\Crefname{equation}{Eqn.}{Eqns.}
+% geometry
+\geometry{
+    top=1cm,
+    bottom=1.5cm,
+    left=1.35cm,
+    right=1.35cm,
+    includehead,
+    includefoot
+}
+\setlength{\columnsep}{0.75cm}
+\setstretch{1.065}
+% glossary
+\setabbreviationstyle[acronym]{long-short}
+\glssetcategoryattribute{acronym}{nohyperfirst}{true}
+\renewcommand*{\glsdonohyperlink}[2]{{\glsxtrprotectlinks{} \glsdohypertarget{#1}{#2}}}
+\input{texMaterials/glossaries}
+% pseudocode
+\lstset{
+    showstringspaces=false,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue},
+    commentstyle=\color[grey]{0.6},
+    stringstyle=\color[RGB]{255,150,75}
+}
+\newcommand{\inlinecode}[2]{ \colorbox{lightgrey}{ \lstinline[language=#1]{$#2$}} } %[]
+% siunitx
+\sisetup{
+    detect-all,
+    separate-uncertainty,  
+    range-units = single,  
+    list-units = single,  
+    per-mode = symbol-or-fraction
+}  
+%%%% bibliography
+\addbibresource{texMaterials/bib.bib}
+% the following to get et. al not in italics
+\renewbibmacro*{name:andothers}{
+    \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames % chktex 1
+  }
+    {\ifnumgreater{\value{liststop}}{1}
+       {\finalandcomma}
+       {}%
+     \andothersdelim\bibstring{andothers}}
+ {}
+}
+% on float pages, have float stuff not centred on page but on top
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% frequently used formulas/abbrevations
+% upright subscripts
+\newcommand*\subtxt[1]{_{\textnormal{#1}}}
+\DeclareRobustCommand\_{\ifmmode\expandafter\subtxt\else\textunderscore\fi}
+% well placed definition colon
+\mathchardef\ordinarycolon\mathcode`\:
+    \mathcode`\:=\string"8000 % chktex 18
+    \begingroup \catcode`\:=\active{}
+    \gdef:{\mathrel{\mathop\ordinarycolon}}
+    \endgroup
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% title and authors
+\title{Some amazing title}
+
+
+\author{Julian Göltz\thanks{julian.goeltz@kip.uni-heidelberg.de} \\
+        Kirchhoff-Insitute for Physics
+        Heidelberg University
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\input{sections/abstract}
+\end{abstract}
+
+
+\section*{Introduction}
+\input{sections/introduction}
+
+
+% Bibliography
+\FloatBarrier{}
+\printbibliography{}
+\addcontentsline{toc}{section}{References}
+
+\FloatBarrier{}
+\pagebreak
+
+
+\FloatBarrier{}
+\clearpage
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SUPPLEMENTS
+\section*{Supplementary Information}
+\glsresetall{}
+% to have seperate bibliography for appendix
+\begin{refsection}
+    \input{sections/SI/stuff.tex}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+
+\end{document}

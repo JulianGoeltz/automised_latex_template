@@ -1,0 +1,67 @@
+			\begin{tikzpicture}[
+				shorten >=0.05pt,
+				->,
+				draw=black,
+				node distance=\layersep,
+				scale=1.2,
+				transform shape]
+				\tikzstyle{every pin edge}=[<-,shorten <=0.5pt]
+				\tikzstyle{neuron}=[circle,draw=black,minimum size=17pt,inner sep=0pt, line width=1.0pt]
+				\tikzstyle{triangle} = [neuron, regular polygon, regular polygon sides=3,rotate=-90];
+				\tikzstyle{input neuron}=[neuron, rectangle, minimum size=14pt];
+                \tikzstyle{input neuron-1}=[input neuron, fill=black!\inputshadeIa];
+                \tikzstyle{input neuron-2}=[input neuron, fill=black!\inputshadeIb];
+                \tikzstyle{input neuron-3}=[input neuron, fill=black!\inputshadeIc];
+                \tikzstyle{input neuron-4}=[input neuron, fill=black!\inputshadeId];
+                \tikzstyle{input neuron-5}=[input neuron, fill=black!\inputshadeIe];
+				\tikzstyle{hidden neuron}=[neuron, draw=gray];
+				\tikzstyle{label neuron}=[neuron, triangle, draw=none];
+				\tikzstyle{label neuron-1}=[label neuron, fill=mplColoursC0, ];
+				\tikzstyle{label neuron-2}=[label neuron, fill=mplColoursC3, ];
+				\tikzstyle{label neuron-3}=[label neuron, fill=mplColoursC2, ];
+				\tikzstyle{label neuron-4}=[label neuron, fill=mplColoursC1, ];
+				\tikzstyle{annot} = [text width=4em, text centered]
+				\tikzstyle{connection} = [line width=0.8pt, -{Latex[length=6.0pt, width=4.0pt]}, draw=black!80]
+
+				\def\numInputs{5}
+				\def\numHidden{6}
+				\def\numLabel{3}
+                \def\yshiftInput{1.0}
+                \def\yshiftHidden{1.5}
+                \def\yshiftLabel{0.0}
+
+				% Draw the input layer nodes
+				\foreach \name / \y in {1,...,\numInputs}
+				% This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+					\path[yshift=\yshiftInput cm, anchor=center]
+                        node[input neuron-\name, anchor=center] (I-\name) at (0, -\y cm) {};
+
+				% Draw the hidden layer nodes
+				\foreach \name / \y in {1,...,\numHidden}
+					\path[yshift=\yshiftHidden cm, anchor=center]
+						node[hidden neuron] (H-\name) at (\layersep, -\y cm) {};
+
+				% Draw the label layer node
+				\foreach \name / \y in {1,...,\numLabel}
+					\path[yshift=\yshiftLabel cm]
+						node[label neuron-\name] (L-\name) at (2 *\layersep, -\y cm) {};
+				% \node[label neuron,pin={[pin edge={->}]right:Output},  of=H-3] (L) {};
+
+				% Connect every node in the input layer with every node in the
+				% hidden layer.
+				\foreach \source in {1,...,\numInputs}
+					\foreach \dest in {1,...,\numHidden}
+						% \path[connection] (I-\source) edge (H-\dest);
+						\draw[connection] (I-\source) --++ (H-\dest);
+
+				% Connect every node in the hidden layer with the label layer
+				\foreach \source in {1,...,\numHidden}
+					\foreach \dest in {1,...,\numLabel}
+						\path[connection] (H-\source) edge (L-\dest);
+
+				% % Annotate the layers
+				% \node[annot, above of=H-\numHidden, xshift=-0.15cm, node distance=0.7cm, label={[rotate=-90](80)}] (H-l) {};
+				% \node[annot, left of=H-l, label={[rotate=-90](49)}] (I-l) {};
+				% \node[annot, right of=H-l, label={[rotate=-90](4)}] (L-l) {};
+			\end{tikzpicture}
+

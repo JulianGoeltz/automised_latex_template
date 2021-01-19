@@ -1,0 +1,51 @@
+
+backend               : pdf
+
+# Paper Parameters {{{
+# font.family           : sans
+# font.sans-serif       : Linux Biolinum
+# font.family           : Linux Biolinum, Linux Biolinum O
+font.family			    : serif
+font.serif            : Latin Modern Roman
+font.style            : normal
+font.weight           : normal
+font.size             : 10
+axes.labelsize        : 12
+legend.fontsize       : 11
+
+text.usetex        : true
+
+
+figure.figsize        : 7.16, 5.37
+figure.dpi            : 600
+#  figure.subplot.hspace : 0.
+#  figure.subplot.wspace : 0.
+legend.loc            : best
+
+axes.facecolor        : none
+figure.facecolor      : none
+savefig.facecolor     : none
+
+axes.labelpad         : 2
+axes.xmargin		  : 0
+
+xtick.major.width     : 1
+xtick.minor.width     : 1
+xtick.major.size      : 3
+xtick.minor.size      : 3
+xtick.direction       : out
+xtick.major.pad       : 2
+xtick.minor.pad       : 2
+
+ytick.major.width     : 1
+ytick.minor.width     : 1
+ytick.major.size      : 3
+ytick.minor.size      : 3
+ytick.direction       : out
+ytick.major.pad       : 2
+ytick.minor.pad       : 2
+
+mathtext.default      : regular
+# }}}
+
+# vim: ft=python fdm=marker

@@ -1,0 +1,65 @@
+% tikzpic.tex
+\documentclass[crop,tikz]{standalone}% 'crop' is the default for v1.0, before it was 'preview'
+
+%\usetikzlibrary{...}% tikz package already loaded by 'tikz' option
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+
+\usepackage[outline]{contour}
+
+\usepackage{rotating}
+
+\begin{document}
+
+\def\layersep{1.5cm}
+\definecolor{correctLabel}{rgb}{0.8392156862745098,0.15294117647058825,0.1568627450980392}
+\definecolor{incorrectLabel}{rgb}{0.12156862745098039, 0.4666666666666667, 0.7058823529411765}
+
+\definecolor{mplColoursC0}{rgb}{0.12156862745098039, 0.4666666666666667, 0.7058823529411765}
+\definecolor{mplColoursC1}{rgb}{1.0, 0.4980392156862745, 0.054901960784313725}
+\definecolor{mplColoursC2}{rgb}{0.17254901960784313, 0.6274509803921569, 0.17254901960784313}
+\definecolor{mplColoursC3}{rgb}{0.8392156862745098, 0.15294117647058825, 0.1568627450980392}
+
+\def\inputshadeIa{100}
+\def\inputshadeIb{15}
+\def\inputshadeIc{0}
+\def\inputshadeId{85}
+\def\inputshadeIe{50}
+
+\begin{tikzpicture}[
+            % font={\sffamily \small},
+            scale=1.,
+            >=latex,
+            transform shape,
+        ]
+        \pgfdeclarelayer{background layer}
+        \pgfsetlayers{background layer,main}
+        \draw[use as bounding box,inner sep=0pt, anchor=north west] node {\includegraphics[width=\textwidth]{../../fig/figSetup.pdf}};
+
+       \node[inner sep=0pt, anchor=north west] (whitehead) at (0.35, -4.45)
+       {
+		   \begin{turn}{90}
+               \input{raster}
+		\end{turn}
+	};
+       \node[inner sep=0pt, anchor=north west] (whitehead) at (8.85, -4.85)
+       {
+		   % \begin{turn}{90}
+           \input{network}
+		% \end{turn}
+	   };
+
+    %    \node[inner sep=0pt] (whitehead) at (11.5,-0.6)
+    %    {
+	% 	    \includegraphics[height=.07\textwidth,angle=90]{HICANN_downscaled.jpg}
+	% 	};
+    %    \node[inner sep=0pt] (whitehead) at (11.6,-1.7)
+    %    {
+	%    		% \includegraphics[width=.08\textwidth]{wafershiny.png}
+	% 	};
+
+
+  \end{tikzpicture}
+\end{document}

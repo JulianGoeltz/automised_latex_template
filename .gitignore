@@ -1,0 +1,41 @@
+## DO NOT COMMIT PDFs usually
+*.pdf
+*.png
+
+## latex auxiliary files
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+*.acn # glossaries
+*.gls # glossaries
+*.idx # makeidx
+
+## Bibliography auxiliary files (bibtex/biblatex/biber):
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Build tool auxiliary files:
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# cache files of other programs
+.*.swp # vim
+*.pyc # python
+__pycache__

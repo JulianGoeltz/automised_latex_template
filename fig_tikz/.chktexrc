@@ -1,0 +1,13 @@
+# Exclude these environments from syntax checking
+VerbEnvir { tikzpicture }
+
+# allow subtraction without complaining about wrong dash length
+WordDash
+{
+	1 2 3
+}
+
+# ignore certain warnings (1 -> command ended with dash)
+CmdLine{
+	-n1
+}
