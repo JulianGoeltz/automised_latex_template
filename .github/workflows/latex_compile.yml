@@ -57,7 +57,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: compiledPDF
-          path: main.pdf
+          path: |
+            fig_tikz/**/*.pdf
+            main.pdf
       # push to other branch for retainig the pdfs
       - name: save all stuff online
         if: github.ref == 'refs/heads/main'
