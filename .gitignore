@@ -37,5 +37,6 @@
 
 # cache files of other programs
 .*.swp # vim
+Session.vim # vim
 *.pyc # python
 __pycache__
