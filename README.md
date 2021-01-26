@@ -1,6 +1,6 @@
 # Template for a latex document
 Make use of github workflows to automatically lint (tex and python), create figures (python and tikz) and compile the `pdf`.
-## [see latest pdf](blob/compiledPDF/main.pdf)
+## [see latest pdf](../../blob/compiledPDF/main.pdf)
 
 
 ## Repo Health
