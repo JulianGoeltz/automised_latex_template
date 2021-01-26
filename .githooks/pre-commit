@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# script written to already include multiple checks and not fail at the first one
+everythingOK=true
+
+# chktex
+tmpString="$(chktex main.tex -q)"
+if [ -n "$tmpString" ]; then
+	echo ":::::::::::::::::::::::::"
+	echo "the tex linter chktex encountered the following error"
+	echo ":::::::::::::::::::::::::"
+	echo "$tmpString"
+	everythingOK=false
+fi
+
+
+if ! $everythingOK; then
+	echo ":::::::::::::::::::::::::"
+	echo "there was an error, if you want to commit nonetheless use 'git commit --no-verify'"
+	exit 1
+fi
