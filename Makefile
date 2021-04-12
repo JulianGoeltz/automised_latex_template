@@ -58,5 +58,15 @@ else
 	done
 endif
 
+lint_tex:
+	chktex main.tex
+	cd figs_tikz; \
+		for folder in fig_*; do \
+		[ -d "$$folder" ] || continue; \
+		cd "$$folder"; \
+		chktex $$folder".tex"; \
+		cd ../; \
+	done
 
-.PHONY: all main.pdf cleanall clean fig_tikz fig_tikz_clean fig_python_clean
+
+.PHONY: all main.pdf cleanall clean fig_tikz fig_tikz_clean fig_python_clean lint_tex
