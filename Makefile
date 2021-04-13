@@ -60,7 +60,7 @@ endif
 
 lint_tex:
 	chktex main.tex
-	cd figs_tikz; \
+	cd fig_tikz; \
 		for folder in fig_*; do \
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
