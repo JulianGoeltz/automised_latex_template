@@ -15,7 +15,7 @@ Make use of github workflows to automatically lint (tex and python), create figu
 `make` builds the pdf (and tikz figures), python figures are included in `make all` or build specificially `make fig_python`.
 python figures are done with the [gridspeccer](https://github.com/obreitwi/gridspeccer/), which has to be installed (see there for install instructions).
 ### `tikz` diagrams
-The are simple `.tex` files located in the `fig` subfolder, and they can be build with `pdflatex` for example.
+The are simple `.tex` files located in the `fig_tikz` subfolder, and they can be build with `pdflatex` for example.
 For easier use, they build instruction is in the `Makefile`, so typing `make fig_tikz` builds the intro figure, and they are added as dependencies to `make main.pdf`
 ### githooks
 There is a hook for git in `.githooks/pre-commit` that runs `chktex` (the latex linter) before every commit to see if there are any problems. In case you want this, you have to (locally) configure `git` to do that with (make sure the file is executable `chmod u+x .githooks/pre-commit`)
