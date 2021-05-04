@@ -4,6 +4,14 @@ BIBTEXEXE=bibtex
 LATEXMK_EXISTS := $(shell latexmk --version 2>/dev/null)
 LATEXMK=latexmk -pdf
 
+# chktex wrapper to have exit on error
+CHKTEX_WRAPPER=sh -c '\
+  tmp="$$(chktex -q -v3 $$1)"; \
+  if [ -n "$$tmp" ] ; then \
+    chktex -q -v3 $$1; \
+    exit 1; \
+  fi' CHKTEX
+
 
 main.pdf: fig_tikz
 ifdef LATEXMK_EXISTS
@@ -59,12 +67,14 @@ else
 endif
 
 lint_tex:
-	chktex main.tex
-	cd fig_tikz; \
-		for folder in fig_*; do \
+	@echo "== main.tex"
+	@${CHKTEX_WRAPPER} main.tex
+	@cd fig_tikz; \
+	for folder in *; do \
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
-		chktex $$folder".tex"; \
+		echo "== fig_tikz/$$folder/$$folder.tex"; \
+		${CHKTEX_WRAPPER} $$folder".tex" || exit; \
 		cd ../; \
 	done
 

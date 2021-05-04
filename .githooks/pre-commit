@@ -3,9 +3,9 @@
 # script written to already include multiple checks and not fail at the first one
 everythingOK=true
 
-# chktex
-tmpString="$(chktex main.tex -q)"
-if [ -n "$tmpString" ]; then
+# linting some tex files (as defined in Makefile, usually with chktex)
+tmpString="$(make lint_tex)"
+if [ "$?" -ne 0 ]; then
 	echo ":::::::::::::::::::::::::"
 	echo "the tex linter chktex encountered the following error"
 	echo ":::::::::::::::::::::::::"
