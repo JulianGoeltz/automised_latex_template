@@ -24,10 +24,21 @@ git config core.hooksPath .githooks
 ```
 ### updating your repo to current version of the template
 Unfortunately, as of now there is no standard/easy/GUI way of doing this.
-The best way, I guess, is described [here](https://stackoverflow.com/a/56577320), i.e., add this repo as a remote, fetch changes and do a manual merge:
+The best way, I guess, is described [here](https://stackoverflow.com/a/56577320), i.e., add this repo as a remote and fetch changes
 ```
 git remote add template git@github.com:JulianGoeltz/automised_latex_template.git
 # or: git remote add template https://github.com/JulianGoeltz/automised_latex_template/
 git fetch --all
-git merge template/main
 ```
+One can then do a manual merge, but this is tedious as all files that are touched by both branches need to be resolved by hand. If you still want to do it, go ahead with `git merge template/main --allow-unrelated-histories`.
+The following should work a lot more automatically, and only actual merge conflicts have to be resolved:
+```
+git checkout -B tmp_TemplateUpdate $(git rev-list --max-parents=0 main)
+git cherry-pick $(git rev-list --max-parents=0 template/main)..template/main
+git checkout main
+git merge tmp_TemplateUpdate
+```
+Explanation: all commits made in the template are `cherry-pick`ed onto the initial commit.
+This temporary branch is then merged (now it comes from a `related-history`, allowing gits magic to work).
+After resolving potential merge conflicts, one can delete the temporary branch with `git branch -d tmp_TemplateUpdate`.
+If you used this approach, please let me know how it went (as this is not entirely smooth, I might consider going back to a non-template repo that should be forked. Then updates would be easier).
