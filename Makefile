@@ -13,9 +13,9 @@ PYTHON_FIGS := $(patsubst code/%,fig/%,$(PYTHON_FIGStmp))
 
 # chktex wrapper to have exit on error
 CHKTEX_WRAPPER=sh -c '\
-  tmp="$$(chktex -q -v3 $$1)"; \
+  tmp="$$(chktex -q -v3 $$@)"; \
   if [ -n "$$tmp" ] ; then \
-    chktex -q -v3 $$1; \
+    chktex -q -v3 $$@; \
     exit 1; \
   fi' CHKTEX
 
@@ -85,8 +85,8 @@ lint_tex:
 	for folder in *; do \
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
-		echo "chktex -q -v3 fig_tikz/$$folder/$$folder.tex"; \
-		${CHKTEX_WRAPPER} $$folder".tex" || exit; \
+		echo "chktex -q -v3 --localrc ../.chktexrc fig_tikz/$$folder/$$folder.tex"; \
+		${CHKTEX_WRAPPER} --localrc ../.chktexrc $$folder.tex || exit; \
 		cd ../; \
 	done
 

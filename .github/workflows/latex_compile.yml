@@ -19,20 +19,22 @@ jobs:
     container:
       image: danteev/texlive
     steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Make the plots
-      run: |
-        cd code
-        gridspeccer --mplrc matplotlibrc
-    - name: 'Upload PDFs as artifacts'
-      uses: actions/upload-artifact@v2
-      with:
-        name: compiledFigPDFs
-        path: fig/*.pdf
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Make the plots
+        run: |
+          cd code
+          gridspeccer --mplrc matplotlibrc
+      - name: 'Upload PDFs as artifacts'
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiledFigPDFs
+          path: fig/*.pdf
   buildPdf:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -45,6 +47,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        with:
+          submodules: true
       # download archived fig pdfs
       - uses: actions/download-artifact@v2
         with:
