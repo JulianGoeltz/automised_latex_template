@@ -85,8 +85,10 @@
 \setstretch{1.065}
 % glossary
 \setabbreviationstyle[acronym]{long-short}
+% the following two lines link the subsequent gls to the first one, so one can easily see what an abbrevation means even without an explicit glossary
+% cf. https://tex.stackexchange.com/a/145782 (but note that a space was removed, otherwise there would be a rogue space)
 \glssetcategoryattribute{acronym}{nohyperfirst}{true}
-\renewcommand*{\glsdonohyperlink}[2]{{\glsxtrprotectlinks{} \glsdohypertarget{#1}{#2}}}
+\renewcommand*{\glsdonohyperlink}[2]{{\glsxtrprotectlinks{}\glsdohypertarget{#1}{#2}}}
 \input{texMaterials/glossaries}
 % pseudocode
 \lstset{
