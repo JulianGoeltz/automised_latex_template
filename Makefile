@@ -4,6 +4,13 @@ BIBTEXEXE=bibtex
 LATEXMK_EXISTS := $(shell latexmk --version 2>/dev/null)
 LATEXMK=latexmk -pdf
 
+# list all possible figure sources (form fig*.py in the code folder) and
+# construct the resulting pdf filenames this allows us to create rules for
+# the individual figures, allowing us to only rebuild the figures that change
+PYTHON_FIG_SOURCES := $(wildcard code/fig*.py)
+PYTHON_FIGStmp := $(patsubst %.py,%.pdf,$(PYTHON_FIG_SOURCES))
+PYTHON_FIGS := $(patsubst code/%,fig/%,$(PYTHON_FIGStmp))
+
 # chktex wrapper to have exit on error
 CHKTEX_WRAPPER=sh -c '\
   tmp="$$(chktex -q -v3 $$1)"; \
@@ -42,8 +49,10 @@ fig_tikz_clean:
 		cd ../; \
 	done
 
-fig_python:
-	cd code; gridspeccer --mplrc matplotlibrc
+fig_python: $(PYTHON_FIGS)
+
+fig/fig%.pdf: code/matplotlibrc code/fig%.py
+	cd code; gridspeccer --mplrc matplotlibrc fig$*.py
 
 fig_python_clean:
 	$(RM) fig/*pdf
