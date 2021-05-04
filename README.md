@@ -22,3 +22,12 @@ There is a hook for git in `.githooks/pre-commit` that runs `chktex` (the latex 
 ```
 git config core.hooksPath .githooks
 ```
+### updating your repo to current version of the template
+Unfortunately, as of now there is no standard/easy/GUI way of doing this.
+The best way, I guess, is described [here](https://stackoverflow.com/a/56577320), i.e., add this repo as a remote, fetch changes and do a manual merge:
+```
+git remote add template git@github.com:JulianGoeltz/automised_latex_template.git
+# or: git remote add template https://github.com/JulianGoeltz/automised_latex_template/
+git fetch --all
+git merge template/main
+```
