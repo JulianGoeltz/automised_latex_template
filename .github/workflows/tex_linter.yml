@@ -27,5 +27,5 @@ jobs:
       - name: Install chktex
         run: sudo apt-get install -y chktex
 
-      - name: LaTeX linter (chktex)
+      - name: LaTeX linter (chktex from Makefile)
         run: make lint_tex

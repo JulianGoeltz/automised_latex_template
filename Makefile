@@ -32,7 +32,8 @@ clean: fig_python_clean fig_tikz_clean
 	$(RM) *.toc *.nav *.out *.snm *.bak *.aux *.log *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk
 
 fig_tikz_clean:
-	cd fig_tikz; \
+	@echo "make fig_tikz_clean"
+	@cd fig_tikz; \
 	for folder in *; do \
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
@@ -45,35 +46,37 @@ fig_python:
 	cd code; gridspeccer --mplrc matplotlibrc
 
 fig_python_clean:
-	rm fig/*pdf
+	$(RM) fig/*pdf
 
 fig_tikz:
 ifdef LATEXMK_EXISTS
-	cd fig_tikz; \
+	@cd fig_tikz; \
 	for folder in *; do \
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
+		echo "fig_tikz/$$folder/; latexmk -pdf $$folder.tex"; \
 		${LATEXMK} $$folder".tex"; \
 		cd ../; \
 	done
 else
-	cd fig_tikz; \
+	@cd fig_tikz; \
 	for folder in *; do \
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
+		echo "fig_tikz/$$folder/; pdflatex $$folder.tex"; \
 		${LATEXEXE} $$folder".tex"; \
 		cd ../; \
 	done
 endif
 
 lint_tex:
-	@echo "== main.tex"
+	@echo "chktex -q -v3 main.tex"
 	@${CHKTEX_WRAPPER} main.tex
 	@cd fig_tikz; \
 	for folder in *; do \
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
-		echo "== fig_tikz/$$folder/$$folder.tex"; \
+		echo "chktex -q -v3 fig_tikz/$$folder/$$folder.tex"; \
 		${CHKTEX_WRAPPER} $$folder".tex" || exit; \
 		cd ../; \
 	done
