@@ -30,7 +30,7 @@ else
 	$(LATEXEXE) main
 endif
 
-all: fig_python main.pdf
+all: check-and-reinit-submodules fig_python main.pdf
 
 cleanall: clean
 	$(RM) main.pdf
@@ -90,5 +90,10 @@ lint_tex:
 		cd ../; \
 	done
 
+check-and-reinit-submodules:
+	@if git submodule status | egrep -q '^[-]|^[+]' ; then \
+		echo "INFO: Need to reinitialize git submodules"; \
+		git submodule update --init; \
+	fi
 
-.PHONY: all main.pdf cleanall clean fig_tikz fig_tikz_clean fig_python_clean lint_tex
+.PHONY: all main.pdf cleanall clean fig_tikz fig_tikz_clean fig_python_clean lint_tex check-and-reinit-submodules
