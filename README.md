@@ -14,6 +14,12 @@ Make use of github workflows to automatically lint (tex and python), create figu
 `Makefile` exists, checks whether latexmk is available to speed up local builds.
 `make` builds the pdf (and tikz figures), python figures are included in `make all` or build specificially `make fig_python`.
 python figures are done with the [gridspeccer](https://github.com/obreitwi/gridspeccer/), which has to be installed (see there for install instructions).
+### building without `make`/`python`
+The following allows local tex compilation (with your favourite tex suite) even without python, make, gridspeccer or whatnot.
+Make sure you are on the current version with `git pull`, and also that you are on the correct branch (probably `git checkout main`), then using the command gets the pdf files from the `compiledPDF` branch, i.e., the figures build on github (YMMV with the globbing, you can also try `bash -c "git restore --source=origin/compiledPDF -- fig/fig*.pdf fig_tikz/fig*/*.pdf"`)
+```zsh
+git restore --source=origin/compiledPDF -- "fig/fig*.pdf" "fig_tikz/fig*/*.pdf"
+```
 ### `tikz` diagrams
 The are simple `.tex` files located in the `fig_tikz` subfolder, and they can be build with `pdflatex` for example.
 For easier use, they build instruction is in the `Makefile`, so typing `make fig_tikz` builds the intro figure, and they are added as dependencies to `make main.pdf`
