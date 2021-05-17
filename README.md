@@ -53,3 +53,23 @@ If you used this approach, please let me know how it went (as this is not entire
 ## Todos
 * perhaps a 'make release' button, or something like this, that automatically creates a tarball that can be uploaded to arxiv (with the help of arxiv collector)
 * link badges to actions
+
+
+## Miscellaneous
+### applying `changes`
+If you use the `changes` package and want to apply the changes, I find the following very helpful.
+Works with multilines and when there are curly brackets in the changes; but might introduce empty lines where they are not wanted.
+```
+bracket_pattern='((([^{}]|\n)*\{([^{}]|\n)*\})*([^{}]|\n)*)'
+sed -i -Ez 's/\\replaced\{'$bracket_pattern'\}\n*\{'$bracket_pattern'\}/\1/gm' **/*.tex
+sed -i -Ez 's/\\added\{'$bracket_pattern'\}/\1/gm' **/*.tex
+sed -i -Ez 's/\\deleted\{'$bracket_pattern'\}//gm' **/*.tex
+```
+### deleting comments
+The following should delete comments:
+	* first deletes all lines that are (linestart,whitespace,comment)
+	* second removes the comments of inline comments IFF the preceeding character is not a backslash, and IFF there is actual non whitespace comment (sometimes a percent before a EOF is needed for some commands)
+```
+sed -i '/^\s*\%.*/d' **/*.tex\
+sed -i -E 's/([^\])\%.+$/\1/gm' **/*.tex
+```
