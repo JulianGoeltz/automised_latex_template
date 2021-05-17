@@ -48,3 +48,8 @@ Explanation: all commits made in the template are `cherry-pick`ed onto the initi
 This temporary branch is then merged (now it comes from a `related-history`, allowing gits magic to work).
 After resolving potential merge conflicts, one can delete the temporary branch with `git branch -d tmp_TemplateUpdate`.
 If you used this approach, please let me know how it went (as this is not entirely smooth, I might consider going back to a non-template repo that should be forked. Then updates would be easier).
+
+
+## Todos
+* perhaps a 'make release' button, or something like this, that automatically creates a tarball that can be uploaded to arxiv (with the help of arxiv collector)
+* link badges to actions
