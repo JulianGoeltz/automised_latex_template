@@ -32,7 +32,11 @@ else
 	$(LATEXEXE) main
 endif
 
-all: check-and-reinit-submodules fig_python main.pdf
+all:
+	$(MAKE) check-and-reinit-submodules
+	$(MAKE) -j4 fig_python
+	$(MAKE) -j4 fig_tikz
+	$(MAKE) main.pdf
 
 cleanall: clean
 	$(RM) main.pdf
