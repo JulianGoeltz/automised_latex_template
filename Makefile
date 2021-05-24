@@ -10,6 +10,8 @@ LATEXMK=latexmk -pdf
 PYTHON_FIG_SOURCES := $(wildcard code/fig*.py)
 PYTHON_FIGStmp := $(patsubst %.py,%.pdf,$(PYTHON_FIG_SOURCES))
 PYTHON_FIGS := $(patsubst code/%,fig/%,$(PYTHON_FIGStmp))
+TIKZ_FIG_SOURCES := $(wildcard fig_tikz/fig*/)
+TIKZ_FIGS := $(patsubst fig_tikz/fig%/,fig_tikz_%,$(TIKZ_FIG_SOURCES))
 
 # chktex wrapper to have exit on error
 CHKTEX_WRAPPER=sh -c '\
@@ -57,25 +59,23 @@ fig/fig%.pdf: code/matplotlibrc code/fig%.py
 fig_python_clean:
 	$(RM) fig/*pdf
 
-fig_tikz:
+fig_tikz: $(TIKZ_FIGS)
+
+fig_tikz/fig%/: fig_tikz_% 
+	@echo
+
+fig_tikz/fig%: fig_tikz_% 
+	@echo
+
+fig_tikz_%:
 ifdef LATEXMK_EXISTS
-	@cd fig_tikz; \
-	for folder in *; do \
-		[ -d "$$folder" ] || continue; \
-		cd "$$folder"; \
-		echo "fig_tikz/$$folder/; latexmk -pdf $$folder.tex"; \
-		${LATEXMK} $$folder".tex"; \
-		cd ../; \
-	done
+	@cd fig_tikz/fig$*; \
+	echo "fig_tikz/fig$*/; latexmk -pdf fig$*.tex"; \
+	${LATEXMK} fig$*".tex" || exit;
 else
-	@cd fig_tikz; \
-	for folder in *; do \
-		[ -d "$$folder" ] || continue; \
-		cd "$$folder"; \
-		echo "fig_tikz/$$folder/; pdflatex $$folder.tex"; \
-		${LATEXEXE} $$folder".tex"; \
-		cd ../; \
-	done
+	@cd fig_tikz/fig$*; \
+	echo "fig_tikz/fig$*/; pdflatex fig$*.tex"; \
+	${LATEXEXE} fig$*".tex" || exit;
 endif
 
 lint_tex:
