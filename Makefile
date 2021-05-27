@@ -22,7 +22,7 @@ CHKTEX_WRAPPER=sh -c '\
   fi' CHKTEX
 
 
-main.pdf:
+main.pdf: fig_tikz
 ifdef LATEXMK_EXISTS
 	$(LATEXMK) main.tex
 else
