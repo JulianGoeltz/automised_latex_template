@@ -22,7 +22,7 @@ CHKTEX_WRAPPER=sh -c '\
   fi' CHKTEX
 
 
-main.pdf: fig_tikz
+main.pdf:
 ifdef LATEXMK_EXISTS
 	$(LATEXMK) main.tex
 else
@@ -42,7 +42,7 @@ cleanall: clean
 	$(RM) main.pdf
 
 clean: fig_python_clean fig_tikz_clean
-	$(RM) *.toc *.nav *.out *.snm *.bak *.aux *.log *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk
+	$(RM) *.toc *.nav *.out *.snm *.bak *.aux *.log *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk *.loc *.soc
 
 fig_tikz_clean:
 	@echo "make fig_tikz_clean"
@@ -51,7 +51,7 @@ fig_tikz_clean:
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
 		$(RM) *aux *log *fls *.fdb_latexmk; \
-		$(RM) $$folder".pdf"; \
+		$(RM) fig*.pdf; \
 		cd ../; \
 	done
 

@@ -3,21 +3,25 @@
 *.png
 
 ## latex auxiliary files
+*.acn
 *.aux
+*.cb
+*.cb2
+*.fls
+*.fmt
+*.fot
+*.gls
+*.glsdefs
+*.idx
+*.loc
 *.lof
 *.log
 *.lot
-*.fls
 *.out
+*.sed
+*.soc
 *.toc
-*.fmt
-*.fot
-*.cb
-*.cb2
 .*.lb
-*.acn # glossaries
-*.gls # glossaries
-*.idx # makeidx
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
@@ -29,14 +33,16 @@
 
 ## Build tool auxiliary files:
 *.fdb_latexmk
+*.pdfsync
 *.synctex
 *.synctex(busy)
 *.synctex.gz
 *.synctex.gz(busy)
-*.pdfsync
 
-# cache files of other programs
-.*.swp # vim
-Session.vim # vim
-*.pyc # python
+## cache files of other programs
+# vim
+.*.swp
+Session.vim
+# python
+*.pyc
 __pycache__
