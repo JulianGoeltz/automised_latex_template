@@ -6,7 +6,7 @@ backend               : pdf
 # font.sans-serif       : Linux Biolinum
 # font.family           : Linux Biolinum, Linux Biolinum O
 font.family			    : serif
-font.serif            : Latin Modern Roman
+font.sans-serif       : Computer Modern
 font.style            : normal
 font.weight           : normal
 font.size             : 10

@@ -58,7 +58,7 @@ fig_tikz_clean:
 fig_python: $(PYTHON_FIGS)
 
 fig/fig%.pdf: code/matplotlibrc code/fig%.py
-	cd code; gridspeccer --mplrc matplotlibrc fig$*.py
+	cd code; gridspeccer --mplrc matplotlibrc --loglevel WARNING fig$*.py
 
 fig_python_clean:
 	$(RM) fig/*pdf

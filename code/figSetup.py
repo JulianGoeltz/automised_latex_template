@@ -301,6 +301,7 @@ def plot_psp_shapes(ax):
         if t_m < t_s:
             factor = 6. / t_m
 
+        t[t < t_i] = t_i
         if t_m != t_s:
             ret_val = factor * t_m * t_s / (t_m - t_s) * theta(t - t_i) * \
                 (np.exp(-(t - t_i) / t_m) - np.exp(-(t - t_i) / t_s))
