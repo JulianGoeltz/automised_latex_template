@@ -1,8 +1,8 @@
-LATEXEXE=pdflatex
+LATEXEXE=pdflatex -synctex=1
 MV=mv
 BIBTEXEXE=bibtex
 LATEXMK_EXISTS := $(shell latexmk --version 2>/dev/null)
-LATEXMK=latexmk -pdf
+LATEXMK=latexmk -pdf -synctex=1
 
 # list all possible figure sources (form fig*.py in the code folder) and
 # construct the resulting pdf filenames this allows us to create rules for
@@ -38,10 +38,10 @@ all:
 	$(MAKE) -j4 fig_tikz
 	$(MAKE) main.pdf
 
-cleanall: clean
+cleanall: clean fig_python_clean
 	$(RM) main.pdf
 
-clean: fig_python_clean fig_tikz_clean
+clean: fig_tikz_clean
 	$(RM) *.toc *.nav *.out *.snm *.bak *.aux *.log *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk *.loc *.soc
 
 fig_tikz_clean:
