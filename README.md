@@ -5,8 +5,8 @@ Make use of github workflows to automatically lint (tex and python), create figu
 
 ## Repo Health
 
-![compile pdf](../../workflows/compile%20pdf/badge.svg)
-![Latex linter](../../workflows/Latex%20linter/badge.svg)
+[![compile pdf](../../workflows/compile%20pdf/badge.svg)](../../actions/workflows/latex_compile.yml)
+[![Latex linter](../../workflows/Latex%20linter/badge.svg)](../../actions/workflows/tex_linter.yml)
 
 
 ## Build instruction
