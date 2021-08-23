@@ -76,6 +76,7 @@ jobs:
           path: fig/
       - name: create tarball
         run: |
+          make
           arxiv-collector main.tex
       - name: 'Upload tarball as artifact'
         uses: actions/upload-artifact@v2
