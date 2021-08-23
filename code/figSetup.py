@@ -94,7 +94,7 @@ def get_fig_kwargs():
 plotEvery = 1
 xlim = (0, 100)
 
-name_of_vleak = "$E_{L}$"
+name_of_vleak = "$E_\ell$"
 name_of_vth = "$\\vartheta$"
 exampleClass = 1
 
@@ -210,7 +210,7 @@ def membrane_schematic(ax, should_spike, xAnnotated=False, yAnnotated=False):
                 theta(t - t_i2) * np.exp(-(t - t_i2) / t_m) * (t - t_i2)
             )
 
-        ax.plot(xvals, V(xvals.copy()), color='black')
+        ax.plot(xvals, V(xvals), color='black')
 
     ax.axhline(V_th, linewidth=1, linestyle='dashed', color='black', alpha=0.6)
 
@@ -317,7 +317,7 @@ def plot_psp_shapes(ax):
     for t_m, t_m_name, col in zip(taums, taums_name, colours):
         # ax.set_xlabel(r'$\tau_\mathrm{m}$ [ms]')
         lab = "$" + r'\tau_\mathrm{{m}} / \tau_\mathrm{{s}} {}'.format(t_m_name) + "$"
-        ax.plot(xvals, V(xvals, t_m), color=col, label=lab)
+        ax.plot(xvals, V(xvals.copy(), t_m), color=col, label=lab)
 
     ax.set_yticks([])
     ax.set_xticks([])
@@ -328,4 +328,4 @@ def plot_psp_shapes(ax):
     ax.set_xlabel("time [a. u.]")
     ax.xaxis.set_label_coords(.5, -0.075)
 
-    ax.legend()
+    ax.legend(frameon=False)
