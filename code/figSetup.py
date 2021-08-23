@@ -210,7 +210,7 @@ def membrane_schematic(ax, should_spike, xAnnotated=False, yAnnotated=False):
                 theta(t - t_i2) * np.exp(-(t - t_i2) / t_m) * (t - t_i2)
             )
 
-        ax.plot(xvals, V(xvals), color='black')
+        ax.plot(xvals, V(xvals.copy()), color='black')
 
     ax.axhline(V_th, linewidth=1, linestyle='dashed', color='black', alpha=0.6)
 

@@ -1,5 +1,5 @@
-# Template for a latex document
-Make use of github workflows to automatically lint (tex and python), create figures (python and tikz) and compile the `pdf`.
+# Template to automatically build ![LaTeX](https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/LaTeX_logo.svg/60px-LaTeX_logo.svg.png) documents with GitHub
+Make use of docker-powered github workflows to automatically create figures (python and tikz) and compile a `pdf` in a standardised fashion, independent of local settings.
 ## [see latest pdf](../../blob/compiledPDF/main.pdf)
 
 

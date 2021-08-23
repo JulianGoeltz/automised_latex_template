@@ -74,10 +74,13 @@ jobs:
         with:
           name: compiledFigPDFs
           path: fig/
-      - name: create tarball
+      - name: create tarball (adds additional bbl files)
         run: |
           make
           arxiv-collector main.tex
+          gunzip arxiv.tar.gz
+          tar uf arxiv.tar main*.bbl
+          gzip arxiv.tar
       - name: 'Upload tarball as artifact'
         uses: actions/upload-artifact@v2
         with:
