@@ -100,4 +100,8 @@ check-and-reinit-submodules:
 		git submodule update --init; \
 	fi
 
-.PHONY: all main.pdf cleanall clean fig_tikz fig_tikz_clean fig_python_clean lint_tex check-and-reinit-submodules
+languagecheck:
+	python -m yalafi.shell --lt-command languagetool --define ~/.config/vlty/defs.tex --equation-punctuation display --packages "*" --include --language en-US main.tex | sed -Ez 's/===\n[0-9]+\.\)/===\n.)/gm' > texMaterials/.languagetool_state.tmp && mv texMaterials/.languagetool_state.tmp texMaterials/.languagetool_state
+
+
+.PHONY: all main.pdf cleanall clean fig_tikz fig_tikz_clean fig_python_clean lint_tex check-and-reinit-submodules languagecheck

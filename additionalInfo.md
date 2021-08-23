@@ -72,3 +72,18 @@ The following should delete comments:
 sed -i '/^\s*\%.*/d' **/*.tex\
 sed -i -E 's/([^\])\%.+$/\1/gm' **/*.tex
 ```
+
+### `languageckeck`
+(the following is not really stable)
+
+There is a `Makefile` routine called `make languageckeck` that uses `LanguageTool` and `YaLafi` to grammar check the language.
+This works more or less: a lot of false negatives, but occasionally some good hints.
+The idea is to check in the `.languagetool_state` at each commit after checking that no new actual errors arose.
+In the `Makefile` the call is designed  cut the irrelevant info with `sed` to ease `git-diff`s.
+
+The call needs the `docdef=atom` option for the `glossaries-extra` package, as well as the `poorman` option for `cleveref`, plus a file that for me lies in `~/.config/vlty/defs.tex` and [can be found online](https://github.com/JulianGoeltz/myConfigFiles/blob/master/other_configs/vlty_defs.tex), currently:
+```
+\LTinput{main.glsdefs}
+\YYCleverefInput{main.sed}
+```
+For more details check the infos of [YaLafi](https://github.com/matze-dd/YaLafi) and [LanguageTool](https://github.com/languagetool-org/languagetool)

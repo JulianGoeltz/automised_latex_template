@@ -30,4 +30,4 @@ In case the figures need to be additionally adapted with `TikZ`, those scripts a
 The main `.tex` file is located in the root folder `/main.tex`.
 
 ## Todos
-* Build time is currently 4 minutes, with the majority used to set up the container. Potentially one wants to speed up this process, or make the builds more sparse, i.e., check every 15 minutes if something happened, if so build, otherwise don't. see https://stackoverflow.com/questions/63014786/how-to-schedule-a-github-actions-nightly-build-but-run-it-only-when-there-where
+* Build time is currently 4 minutes, with the majority used to set up the container. Potentially one wants to speed up this process; or make the builds more sparse, i.e., check every 15 minutes if something happened, if so build, otherwise don't. see https://stackoverflow.com/questions/63014786/how-to-schedule-a-github-actions-nightly-build-but-run-it-only-when-there-where ; or stop older builds https://stackoverflow.com/questions/58895283/stop-already-running-workflow-job-in-github-actions
