@@ -7,11 +7,11 @@ LATEXMK=latexmk -pdf -synctex=1
 # list all possible figure sources (form fig*.py in the code folder) and
 # construct the resulting pdf filenames this allows us to create rules for
 # the individual figures, allowing us to only rebuild the figures that change
-PYTHON_FIG_SOURCES := $(wildcard code/fig*.py)
+PYTHON_FIG_SOURCES := $(wildcard src/python/fig*.py)
 PYTHON_FIGStmp := $(patsubst %.py,%.pdf,$(PYTHON_FIG_SOURCES))
-PYTHON_FIGS := $(patsubst code/%,fig/%,$(PYTHON_FIGStmp))
-TIKZ_FIG_SOURCES := $(wildcard fig_tikz/fig*/)
-TIKZ_FIGS := $(patsubst fig_tikz/fig%/,fig_tikz_%,$(TIKZ_FIG_SOURCES))
+PYTHON_FIGS := $(patsubst src/python/%,fig/%,$(PYTHON_FIGStmp))
+TIKZ_FIG_SOURCES := $(wildcard src/tikz/fig*/)
+TIKZ_FIGS := $(patsubst src/tikz/fig%/,fig_tikz_%,$(TIKZ_FIG_SOURCES))
 
 # chktex wrapper to have exit on error
 CHKTEX_WRAPPER=sh -c '\
@@ -24,12 +24,12 @@ CHKTEX_WRAPPER=sh -c '\
 
 main.pdf: fig_tikz
 ifdef LATEXMK_EXISTS
-	$(LATEXMK) main.tex
+	cd src/tex && $(LATEXMK) main.tex
 else
-	$(LATEXEXE) main
-	$(BIBTEXEXE) main
-	$(LATEXEXE) main
-	$(LATEXEXE) main
+	cd src/tex && $(LATEXEXE) main
+	cd src/tex && $(BIBTEXEXE) main
+	cd src/tex && $(LATEXEXE) main
+	cd src/tex && $(LATEXEXE) main
 endif
 
 all:
@@ -39,14 +39,14 @@ all:
 	$(MAKE) main.pdf
 
 cleanall: clean fig_python_clean
-	$(RM) main.pdf
+	$(RM) src/tex/main.pdf
 
 clean: fig_tikz_clean
-	$(RM) *.toc *.nav *.out *.snm *.bak *.aux *.log *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk *.loc *.soc
+	cd src/tex && $(RM) *.toc *.nav *.out *.snm *.bak *.aux *.log *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk *.loc *.soc
 
 fig_tikz_clean:
 	@echo "make fig_tikz_clean"
-	@cd fig_tikz; \
+	@cd src/tikz; \
 	for folder in *; do \
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
@@ -57,8 +57,8 @@ fig_tikz_clean:
 
 fig_python: $(PYTHON_FIGS)
 
-fig/fig%.pdf: code/matplotlibrc code/fig%.py
-	cd code; gridspeccer --mplrc matplotlibrc --loglevel WARNING fig$*.py
+fig/fig%.pdf: src/python/matplotlibrc src/python/fig%.py
+	cd src/python; gridspeccer --mplrc matplotlibrc --output-folder=../../fig/ --loglevel WARNING fig$*.py
 
 fig_python_clean:
 	$(RM) fig/*pdf
@@ -73,23 +73,23 @@ fig_tikz/fig%: fig_tikz_%
 
 fig_tikz_%:
 ifdef LATEXMK_EXISTS
-	@cd fig_tikz/fig$*; \
-	echo "fig_tikz/fig$*/; latexmk -pdf fig$*.tex"; \
+	@cd src/tikz/fig$*; \
+	echo "src/tikz/fig$*/; latexmk -pdf fig$*.tex"; \
 	${LATEXMK} fig$*".tex" || exit;
 else
-	@cd fig_tikz/fig$*; \
-	echo "fig_tikz/fig$*/; pdflatex fig$*.tex"; \
+	@cd src/tikz/fig$*; \
+	echo "src/tikz/fig$*/; pdflatex fig$*.tex"; \
 	${LATEXEXE} fig$*".tex" || exit;
 endif
 
 lint_tex:
 	@echo "chktex -q -v3 main.tex"
-	@${CHKTEX_WRAPPER} main.tex
-	@cd fig_tikz; \
+	@cd src/tex && ${CHKTEX_WRAPPER} main.tex
+	@cd src/tikz; \
 	for folder in *; do \
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
-		echo "chktex -q -v3 --localrc ../.chktexrc fig_tikz/$$folder/$$folder.tex"; \
+		echo "chktex -q -v3 --localrc ../.chktexrc src/tikz/$$folder/$$folder.tex"; \
 		${CHKTEX_WRAPPER} --localrc ../.chktexrc $$folder.tex || exit; \
 		cd ../; \
 	done
