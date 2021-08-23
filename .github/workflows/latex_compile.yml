@@ -30,8 +30,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Make the plots
         run: |
-          cd code
-          gridspeccer --mplrc matplotlibrc
+          make fig_python
       - name: 'Upload PDFs as artifacts'
         uses: actions/upload-artifact@v2
         with:

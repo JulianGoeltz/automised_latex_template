@@ -42,7 +42,7 @@ cleanall: clean fig_python_clean
 	$(RM) main.pdf
 
 clean: fig_tikz_clean
-	$(RM) *.toc *.nav *.out *.snm *.bak *.aux *.log *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk *.loc *.soc
+	$(RM) *.toc *.nav *.out *.snm *.bak *.aux *.log *.bbl *.blg *.lof *.lot *.fls *.fdb_latexmk *.loc *.soc *-blx.bib  *.run.xml  *.synctex.gz
 
 fig_tikz_clean:
 	@echo "make fig_tikz_clean"
