@@ -1,75 +1,33 @@
 # Template to automatically build ![LaTeX](https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/LaTeX_logo.svg/60px-LaTeX_logo.svg.png) documents with GitHub
-Make use of docker-powered github workflows to automatically create figures (python and tikz) and compile a `pdf` in a standardised fashion, independent of local settings.
-## [see latest pdf](../../blob/compiledPDF/main.pdf)
+Make use of docker-powered github workflows to automatically create figures (`python` and `TikZ`) and compile a `pdf` in a standardised fashion, independent of local settings.
 
 
-## Repo Health
-
+## Repo state
+**[see latest pdf](../../blob/compiledPDF/main.pdf)**
 [![compile pdf](../../workflows/compile%20pdf/badge.svg)](../../actions/workflows/latex_compile.yml)
 [![Latex linter](../../workflows/Latex%20linter/badge.svg)](../../actions/workflows/tex_linter.yml)
 
+## Why this repo
+The idea is comparable to [overleaf.com](https://www.overleaf.com), but with two significant changes: making full use of git features as well as create plots during the build process.
+Regarding git, [overleaf states](https://www.overleaf.com/blog/195-new-collaborate-online-and-offline-with-overleaf-and-git-beta)
+> It's also worth noting that you can use whatever git branching model you like locally, but you can only push changes to the master branch on Overleaf. 
+
+I, personally, make a lot of use of multiple branches, especially in combination with the GitHub pull requests and when working together with other people. This was the initial reason for me to find a solution for `LaTeX` group projects. 
+[The texlive docker container of DANTE EV](https://github.com/dante-ev/docker-texlive) combines well with the GitHub Actions to automatically build the `main.tex` at each commit.
+
+Additionally, [the gridspeccer](https://github.com/gridspeccer/gridspeccer) project is used as a helper script to automate the plotting of multi-panel figures.
+`gridspeccer` has a lot of flexibilities while enabling adaptions in a quick and straightforward manner.
+
+This template is most useful for scientific papers, and was used, e.g., for
+* Fast and deep: energy-efficient neuromorphic learning with first-spike times; J. Göltz∗, L. Kriener∗, A. Baumbach, S. Billaudelle, O. Breitwieser, B. Cramer, D. Dold, A. F. Kungl, W. Senn, J. Schemmel, K. Meier, M. A. Petrovici; https://arxiv.org/abs/1912.11443
 
 ## Build instruction
-### manuscript
-`Makefile` exists, checks whether latexmk is available to speed up local builds.
-`make` builds the pdf (and tikz figures), python figures are included in `make all` or build specificially `make fig_python`.
-python figures are done with the [gridspeccer](https://github.com/obreitwi/gridspeccer/), which has to be installed (see there for install instructions).
-### building without `make`/`python`
-The following allows local tex compilation (with your favourite tex suite) even without python, make, gridspeccer or whatnot.
-Make sure you are on the current version with `git pull`, and also that you are on the correct branch (probably `git checkout main`), then using the command gets the pdf files from the `compiledPDF` branch, i.e., the figures build on github (YMMV with the globbing, you can also try `bash -c "git restore --source=origin/compiledPDF -- fig/fig*.pdf fig_tikz/fig*/*.pdf"`)
-```zsh
-git restore --source=origin/compiledPDF -- "fig/fig*.pdf" "fig_tikz/fig*/*.pdf"
-```
-### `tikz` diagrams
-The are simple `.tex` files located in the `fig_tikz` subfolder, and they can be build with `pdflatex` for example.
-For easier use, they build instruction is in the `Makefile`, so typing `make fig_tikz` builds the intro figure, and they are added as dependencies to `make main.pdf`
-### githooks
-There is a hook for git in `.githooks/pre-commit` that runs `chktex` (the latex linter) before every commit to see if there are any problems. In case you want this, you have to (locally) configure `git` to do that with (make sure the file is executable `chmod u+x .githooks/pre-commit`)
-```
-git config core.hooksPath .githooks
-```
-### updating your repo to current version of the template
-Unfortunately, as of now there is no standard/easy/GUI way of doing this.
-The best way, I guess, is described [here](https://stackoverflow.com/a/56577320), i.e., add this repo as a remote and fetch changes
-```
-git remote add template git@github.com:JulianGoeltz/automised_latex_template.git
-# or: git remote add template https://github.com/JulianGoeltz/automised_latex_template/
-git fetch --all
-```
-One can then do a manual merge, but this is tedious as all files that are touched by both branches need to be resolved by hand. If you still want to do it, go ahead with `git merge template/main --allow-unrelated-histories`.
-The following should work a lot more automatically, and only actual merge conflicts have to be resolved:
-```
-git checkout -B tmp_TemplateUpdate $(git rev-list --max-parents=0 main)
-git cherry-pick $(git rev-list --max-parents=0 template/main)..template/main
-git checkout main
-git merge tmp_TemplateUpdate
-```
-Explanation: all commits made in the template are `cherry-pick`ed onto the initial commit.
-This temporary branch is then merged (now it comes from a `related-history`, allowing gits magic to work).
-After resolving potential merge conflicts, one can delete the temporary branch with `git branch -d tmp_TemplateUpdate`.
-If you used this approach, please let me know how it went (as this is not entirely smooth, I might consider going back to a non-template repo that should be forked. Then updates would be easier).
+For details see [the detailed build information](additionalInfo.md#build-instruction), but as a quick guide:
+after installing the requirements with `pip install -r requirements.txt` (ideally in a `venv`), `make` builds the manuscript.
 
+The repository is structured to have the `python` plot scripts in `/code` and the plots are created in `/fig`.
+In case the figures need to be additionally adapted with `TikZ` those scripts are located in `/fig_tikz`.
+The main `.tex` file is located in the root folder `/main.tex`.
 
 ## Todos
-* perhaps a 'make release' button, or something like this, that automatically creates a tarball that can be uploaded to arxiv (with the help of arxiv collector)
-* link badges to actions
-
-
-## Miscellaneous
-### applying `changes`
-If you use the `changes` package and want to apply the changes, I find the following very helpful.
-Works with multilines and when there are curly brackets in the changes; but might introduce empty lines where they are not wanted.
-```
-bracket_pattern='((([^{}]|\n)*\{([^{}]|\n)*\})*([^{}]|\n)*)'
-sed -i -Ez 's/\\replaced\{'$bracket_pattern'\}\n*\{'$bracket_pattern'\}/\1/gm' **/*.tex
-sed -i -Ez 's/\\added\{'$bracket_pattern'\}/\1/gm' **/*.tex
-sed -i -Ez 's/\\deleted\{'$bracket_pattern'\}//gm' **/*.tex
-```
-### deleting comments
-The following should delete comments:
-	* first deletes all lines that are (linestart,whitespace,comment)
-	* second removes the comments of inline comments IFF the preceeding character is not a backslash, and IFF there is actual non whitespace comment (sometimes a percent before a EOF is needed for some commands)
-```
-sed -i '/^\s*\%.*/d' **/*.tex\
-sed -i -E 's/([^\])\%.+$/\1/gm' **/*.tex
-```
+* Build time is currently 4 minutes, with the majority used to set up the container. Potentially one wants to speed up this process, or make the builds more sparse, i.e., check every 15 minutes if something happened, if so build, otherwise don't. see https://stackoverflow.com/questions/63014786/how-to-schedule-a-github-actions-nightly-build-but-run-it-only-when-there-where
