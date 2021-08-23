@@ -60,6 +60,8 @@ jobs:
   create_arxiv:
     runs-on: ubuntu-latest
     needs: buildPdf
+    container:
+      image: danteev/texlive
     steps:
       - uses: actions/checkout@v2
         with:
