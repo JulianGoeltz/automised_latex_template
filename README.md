@@ -1,9 +1,9 @@
 # Template to automatically build ![LaTeX](https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/LaTeX_logo.svg/60px-LaTeX_logo.svg.png) documents with GitHub
-Make use of docker-powered github workflows to automatically create figures (`python` and `TikZ`) and compile a `pdf` in a standardised fashion, independent of local settings.
+Make use of docker-powered GitHub workflows to automatically create figures (`python` and `TikZ`) and compile a `pdf` in a standardised fashion, independent of local settings.
 
 
-## Repo state
-**[see latest pdf](../../blob/compiledPDF/main.pdf)**
+## Repository state
+### [![see latest pdf](https://img.shields.io/static/v1?label=PDF&logo=adobeacrobatreader&message=see%20latest%20version&color=success)](../../blob/compiledPDF/main.pdf)
 [![compile pdf](../../workflows/compile%20pdf/badge.svg)](../../actions/workflows/latex_compile.yml)
 [![Latex linter](../../workflows/Latex%20linter/badge.svg)](../../actions/workflows/tex_linter.yml)
 
@@ -23,10 +23,10 @@ This template is most useful for scientific papers, and was used, e.g., for
 
 ## Build instruction
 For details see [the detailed build information](additionalInfo.md#build-instruction), but as a quick guide:
-after installing the requirements with `pip install -r requirements.txt` (ideally in a `venv`), `make` builds the manuscript.
+after installing the requirements with `pip install -r requirements.txt` (ideally in a [`venv`](https://docs.python.org/3/library/venv.html)), `make fig_python && make` builds the manuscript.
 
 The repository is structured to have the `python` plot scripts in `/code` and the plots are created in `/fig`.
-In case the figures need to be additionally adapted with `TikZ` those scripts are located in `/fig_tikz`.
+In case the figures need to be additionally adapted with `TikZ`, those scripts are located in `/fig_tikz`.
 The main `.tex` file is located in the root folder `/main.tex`.
 
 ## Todos
