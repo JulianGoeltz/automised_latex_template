@@ -25,6 +25,12 @@ There is a hook for git in `.githooks/pre-commit` that runs `chktex` (the latex 
 git config core.hooksPath .githooks
 ```
 
+### GitHub Actions
+Configured in `/.github/workflows/`, there are two automatic workflows, done `on push` and weekly: one to lint the tex, and one that first builds the figures, and afterwards the pdf.
+They basically just execute the `Makefile` commands, but the latter also commits the compiled pdf and figures into a special branch called `compiledPDF` to have it available online.
+
+There is a third workflow, `arxiv_archive.yaml`, that can be triggered from the `Actions` tab. With the help of [arxiv-collector](https://github.com/djsutherland/arxiv-collector) it collects all relevant files (tex, images and temporary files), strips them of comments and puts them into a tarball. I adapted this to also include additional `bbl` files that are used for SI specific bibliographies (i.e., `refsection`s in LaTeX).
+
 
 ## Updating your repo to current version of the template
 Unfortunately, as of now there is no standard/easy/GUI way of doing this.
