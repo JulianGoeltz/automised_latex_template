@@ -16,13 +16,16 @@ I, personally, make a lot of use of multiple branches, especially in combination
 [The texlive docker container of DANTE EV](https://github.com/dante-ev/docker-texlive) combines well with the GitHub Actions to automatically build the `main.tex` at each commit.
 
 Additionally, [the gridspeccer](https://github.com/gridspeccer/gridspeccer) project is used as a helper script to automate the plotting of multi-panel figures.
-`gridspeccer` has a lot of flexibilities while enabling adaptions in a quick and straightforward manner.
+`gridspeccer` has a lot of flexibilities while enabling adaptions in a quick and straightforward manner; however, it is no requirement if you don't need plots, [or use alternative plotting methods](additionalInfo.md#gridspeccer-alternative).
 
 This template is most useful for scientific papers, and was used, e.g., for
 * Fast and deep: energy-efficient neuromorphic learning with first-spike times; J. Göltz∗, L. Kriener∗, A. Baumbach, S. Billaudelle, O. Breitwieser, B. Cramer, D. Dold, A. F. Kungl, W. Senn, J. Schemmel, K. Meier, M. A. Petrovici; https://arxiv.org/abs/1912.11443
 
 ## Build instruction
-For details see [the detailed build information](additionalInfo.md#build-instruction), but as a quick guide:
+### On GitHub
+When adhering to [the repo structure](additionalInfo.md#repository-structure), the [workflows](additionalInfo.md#github-actions) will build the document automatically.
+### On your local machine
+For details see [the detailed build information](additionalInfo.md#local-build-instruction), but as a quick guide:
 after installing the requirements with `pip install -r requirements.txt` (ideally in a [`venv`](https://docs.python.org/3/library/venv.html)), `make fig_python && make` builds the manuscript.
 
 The repository is structured to have the `python` plot scripts in `/code` and the plots are created in `/fig`.
@@ -30,4 +33,4 @@ In case the figures need to be additionally adapted with `TikZ`, those scripts a
 The main `.tex` file is located in the root folder `/main.tex`.
 
 ## Todos
-* Build time is currently 4 minutes, with the majority used to set up the container. Potentially one wants to speed up this process; or make the builds more sparse, i.e., check every 15 minutes if something happened, if so build, otherwise don't. see https://stackoverflow.com/questions/63014786/how-to-schedule-a-github-actions-nightly-build-but-run-it-only-when-there-where ; or stop older builds https://stackoverflow.com/questions/58895283/stop-already-running-workflow-job-in-github-actions
+* Online build time is currently 4 minutes, with the majority used to set up the container. Potentially one wants to speed up this process; or make the builds more sparse, i.e., check every 15 minutes if something happened, if so build, otherwise don't. see https://stackoverflow.com/questions/63014786/how-to-schedule-a-github-actions-nightly-build-but-run-it-only-when-there-where ; or stop older builds https://stackoverflow.com/questions/58895283/stop-already-running-workflow-job-in-github-actions

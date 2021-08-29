@@ -3,12 +3,28 @@
 * `TikZ` tex files be in `/fig_tikz/fig*/` folders and named `fig*.tex` like the respective folder.
 * `main.tex` to include content files from `/sections/` and support files from `/texMaterials/`.
 
-## Build instruction
-### Manuscript
-`Makefile` exists, checks whether latexmk is available to speed up local builds.
-`make` builds the pdf (and `TikZ` figures), speed up through parallelisation with `make all`
-`python` figures are included in `make all`, or build specifically with `make fig_python`. [gridspeccer](https://github.com/gridspeccer/gridspeccer/) is used, which has to be installed (see there for install instructions).
-`make lint_tex` lints the tex files.
+## Local build instruction
+### Default build
+* `make` builds the pdf (and `TikZ` figures), speed up through parallelisation with `make all`
+* by default, `python` figures use [gridspeccer](https://github.com/gridspeccer/gridspeccer/), which has to be installed (see there for install instructions), [see below for the reason and alternative](#gridspeccer-alternative)
+  `python` figures are included in `make all`, or build specifically with `make fig_python`. 
+* `TikZ` figures can be build with `make fig_tikz`
+* `make clean` cleans temporary files from the tex build as well as the `TikZ` folders, but *NOT* the python figures
+* `make cleanall` also removes the python figures as well, and the `main.pdf`
+* `make lint_tex` lints the tex files.
+
+
+### `gridspeccer` alternative
+`gridspeccer` is used in order to have standardised plot formatting, easy control over plot arrangement, as well as good automatisation: from the available python sources the `Makefile` can infer the build targets, and uses this information to only replot a figure if it has been changed.
+This has proven valuable when updating figures, as it saves a lot of time.
+
+However, replacing `gridspeccer` with your favourite plotting tool for the automatic build is as easy as putting your plot commands in the [`Makefile` instruction `fig_python`](https://github.com/JulianGoeltz/automised_latex_template/blob/322a0f06f813a388d9d33dd551e893e00cd2df9b/Makefile#L58) like so:
+```Makefile
+fig_python: $(PYTHON_FIGS)
+	python code/yourNewPlotfile.py
+	gnuplot code/yourNewPlotfile.p
+```
+
 
 ### Building without `make`/`python`
 The following allows local tex compilation (with your favourite tex suite) even without python, make, gridspeccer or whatnot.
