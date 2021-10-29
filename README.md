@@ -19,7 +19,8 @@ Additionally, [the gridspeccer](https://github.com/gridspeccer/gridspeccer) proj
 `gridspeccer` has a lot of flexibilities while enabling adaptions in a quick and straightforward manner; however, it is no requirement if you don't need plots, [or use alternative plotting methods](additionalInfo.md#gridspeccer-alternative).
 
 This template is most useful for scientific papers, and was used, e.g., for
-* Fast and deep: energy-efficient neuromorphic learning with first-spike times; J. Göltz∗, L. Kriener∗, A. Baumbach, S. Billaudelle, O. Breitwieser, B. Cramer, D. Dold, A. F. Kungl, W. Senn, J. Schemmel, K. Meier, M. A. Petrovici; https://arxiv.org/abs/1912.11443
+* Fast and deep: energy-efficient neuromorphic learning with first-spike times; J. Göltz∗, L. Kriener∗, A. Baumbach, S. Billaudelle, O. Breitwieser, B. Cramer, D. Dold, A. F. Kungl, W. Senn, J. Schemmel, K. Meier, M. A. Petrovici; [*Nature Machine Intelligence*, 3(9), 823-835.](https://www.nature.com/articles/s42256-021-00388-x) preprint at https://arxiv.org/abs/1912.11443
+* Haider, P., Ellenberger, B., Kriener, L., Jordan, J., Senn, W., & Petrovici, M.A. (2021). Latent Equilibrium: A unified learning theory for arbitrarily fast computation with arbitrarily slow neurons. preprint at https://arxiv.org/abs/2110.14549
 
 ## Build instruction
 ### On GitHub
