@@ -5,7 +5,7 @@ Make use of docker-powered GitHub workflows to automatically create figures (`py
 ## Repository state
 ### [![see latest pdf](https://img.shields.io/static/v1?label=PDF&logo=adobeacrobatreader&message=see%20latest%20version&color=success)](../../blob/compiledPDF/main.pdf)
 [![compile pdf](../../workflows/compile%20pdf/badge.svg)](../../actions/workflows/latex_compile.yml)
-[![Linter](../../workflows/linter/badge.svg)](../../actions/workflows/linter.yml)
+[![Linter](../../workflows/Linter/badge.svg)](../../actions/workflows/linter.yml)
 
 ## Why this repo
 The idea is comparable to [overleaf.com](https://www.overleaf.com), but with two significant changes: making full use of git features as well as create plots during the build process.
