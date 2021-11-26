@@ -70,6 +70,11 @@ After resolving potential merge conflicts, one can delete the temporary branch w
 If you used this approach, please let me know how it went (as this is not entirely smooth, I might consider going back to a non-template repo that should be forked. Then updates would be easier).
 
 
+### Using the workflows for an existing repository
+Multiple ways:
+* If it is okay for you to throw away the history, clone the template and copy the `tex` code into this template.
+* If you want to keep your history, the easiest way probably is to copy the workflow files as well as the Makefile. Here you need to decide if you want to include the plot files as well, or commit finished figures.
+
 
 ## Miscellaneous
 ### Compute time and storage on Github
