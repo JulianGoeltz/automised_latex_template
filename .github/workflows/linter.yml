@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Latex linter
+name: Linter
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
@@ -31,3 +31,15 @@ jobs:
 
       - name: LaTeX linter (chktex from Makefile)
         run: make lint_tex
+  lintBib:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Install bibtex-tidy
+        run: npm install -g bibtex-tidy
+      - name: Bib linter (bibtex-tidy from Makefile)
+        run: make lint_bib
+      - name: Check nothing changed
+        run: git diff --exit-code texMaterials/*.bib || (echo "unstashed changes in texMaterials/*.bib, format your bib file before comitting"; exit 1)
