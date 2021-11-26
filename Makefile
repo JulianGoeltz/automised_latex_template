@@ -94,6 +94,11 @@ lint_tex:
 		cd ../; \
 	done
 
+lint_bib:
+	@echo "Checking that all bib files are staged, s.t. the change can be tracked"
+	git diff --exit-code texMaterials/*.bib || (echo "unstashed changes in texMaterials/*.bib, stash first"; exit 1)
+	bibtex-tidy --curly --numeric --duplicates=key --no-remove-dupe-fields texMaterials/*.bib
+
 check-and-reinit-submodules:
 	@if git submodule status | egrep -q '^[-]|^[+]' ; then \
 		echo "INFO: Need to reinitialize git submodules"; \
