@@ -38,7 +38,7 @@ jobs:
         with:
           submodules: true
       - name: Install bibtex-tidy
-        run: npm install -g bibtex-tidy
+        run: sudo npm install -g bibtex-tidy
       - name: Bib linter (bibtex-tidy from Makefile)
         run: make lint_bib
       - name: Check nothing changed
