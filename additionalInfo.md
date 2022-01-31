@@ -11,7 +11,8 @@
 * `TikZ` figures can be build with `make fig_tikz`
 * `make clean` cleans temporary files from the tex build as well as the `TikZ` folders, but *NOT* the python figures
 * `make cleanall` also removes the python figures as well, and the `main.pdf`
-* `make lint_tex` lints the tex files.
+* `make lint_tex` lints the tex files
+* `make lint_bib` lints the bib file (with [`bibtex-tidy`](https://github.com/FlamingTempura/bibtex-tidy))
 
 
 ### `gridspeccer` alternative
@@ -36,13 +37,13 @@ git restore --source=origin/compiledPDF -- "fig/fig*.pdf" "fig_tikz/fig*/*.pdf"
 The are simple `.tex` files located in the `fig_tikz` subfolder, and they can be build with `pdflatex` for example.
 For easy use, the build instruction is in the `Makefile`, so typing `make fig_tikz` builds the intro figure and any you add.
 ### `git` hooks
-There is a hook for git in `.githooks/pre-commit` that runs `chktex` (the latex linter) before every commit to see if there are any problems. In case you want this, you have to (locally) configure `git` to do that with (make sure the file is executable `chmod u+x .githooks/pre-commit`)
+There is a hook for git in `.githooks/pre-commit` that runs the latex and bib linter (both routines defined in the Makefile) before every commit to see if there are any problems. In case you want this, you have to (locally) configure `git` to do that with (make sure the file is executable `chmod u+x .githooks/pre-commit`)
 ```
 git config core.hooksPath .githooks
 ```
 
 ### GitHub Actions
-Configured in `/.github/workflows/`, there are two automatic workflows, done `on push` and weekly: one to lint the tex, and one that first builds the figures, and afterwards the pdf.
+Configured in `/.github/workflows/`, there are two automatic workflows, done `on push` and weekly: one to lint the tex and bib, and one that first builds the figures, and afterwards the pdf.
 They basically just execute the `Makefile` commands, but the latter also commits the compiled pdf and figures into a special branch called `compiledPDF` to have it available online.
 
 There is a third workflow, `arxiv_archive.yaml`, that can be triggered from the `Actions` tab. With the help of [arxiv-collector](https://github.com/djsutherland/arxiv-collector) it collects all relevant files (tex, images and temporary files), strips them of comments and puts them into a tarball. I adapted this to also include additional `bbl` files that are used for SI specific bibliographies (i.e., `refsection`s in LaTeX).

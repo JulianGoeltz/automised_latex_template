@@ -13,6 +13,16 @@ if [ "$?" -ne 0 ]; then
 	everythingOK=false
 fi
 
+# linting the bib file (defined in Makefile)
+tmpString="$(make lint_bib)"
+if [ "$?" -ne 0 ]; then
+	echo ":::::::::::::::::::::::::"
+	echo "the bib linter encountered the following error"
+	echo ":::::::::::::::::::::::::"
+	echo "$tmpString"
+	everythingOK=false
+fi
+
 
 if ! $everythingOK; then
 	echo ":::::::::::::::::::::::::"
