@@ -13,13 +13,13 @@ PYTHON_FIGS := $(patsubst code/%,fig/%,$(PYTHON_FIGStmp))
 TIKZ_FIG_SOURCES := $(wildcard fig_tikz/fig*/)
 TIKZ_FIGS := $(patsubst fig_tikz/fig%/,fig_tikz_%,$(TIKZ_FIG_SOURCES))
 
-# chktex wrapper to have exit on error
+# chktex wrapper to have exit on error (-g0 means to not read global cktexrc)
 CHKTEX_WRAPPER=sh -c '\
-  tmp="$$(chktex -q -v3 $$@)"; \
+  tmp="$$(chktex -q -v3 -g0 $$@)"; \
   if [ -n "$$tmp" ] ; then \
-    chktex -q -v3 $$@; \
+    chktex -q -v3 -g0 $$@; \
     exit 1; \
-  fi' CHKTEX
+  fi' --
 
 
 main.pdf: fig_tikz
@@ -83,13 +83,13 @@ else
 endif
 
 lint_tex:
-	@echo "chktex -q -v3 main.tex"
-	@${CHKTEX_WRAPPER} main.tex
+	@echo "chktex -q -v3 -g0 --localrc texMaterials/chktexrc main.tex"
+	@${CHKTEX_WRAPPER} --localrc texMaterials/chktexrc main.tex
 	@cd fig_tikz; \
 	for folder in *; do \
 		[ -d "$$folder" ] || continue; \
 		cd "$$folder"; \
-		echo "chktex -q -v3 --localrc ../.chktexrc fig_tikz/$$folder/$$folder.tex"; \
+		echo "cd fig_tikz/$$folder; chktex -q -v3 -g0 --localrc ../.chktexrc $$folder.tex"; \
 		${CHKTEX_WRAPPER} --localrc ../.chktexrc $$folder.tex || exit; \
 		cd ../; \
 	done
