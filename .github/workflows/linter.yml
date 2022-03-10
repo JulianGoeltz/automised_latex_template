@@ -47,7 +47,7 @@ jobs:
       # if the bib files were correclty formatted, git diff returns 0, and none of the following steps are executed
       - name: Create patch
         if: steps.modificationCheck.outputs.EXITCODE != 0
-        run: git diff --exit-code texMaterials/*.bib > bibfilemodification.patch
+        run: git diff texMaterials/*.bib > bibfilemodification.patch
       - name: 'Upload tidied bibtex files and patch as artifacts'
         if: steps.modificationCheck.outputs.EXITCODE != 0
         uses: actions/upload-artifact@v2
