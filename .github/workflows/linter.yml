@@ -53,9 +53,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: tidiedBibFiles
-          path:
-            - texMaterials/*.bib
-            - bibfilemodification.patch
+          path: |
+            texMaterials/*.bib
+            bibfilemodification.patch
       - name: Check nothing changed
         if: steps.modificationCheck.outputs.EXITCODE != 0
         run: echo "unstashed changes in texMaterials/*.bib, format your bib file before comitting (tidied as well as patch are provided in artifact)"; exit 1
