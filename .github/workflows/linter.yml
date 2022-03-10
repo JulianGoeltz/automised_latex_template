@@ -43,7 +43,7 @@ jobs:
         run: make lint_bib
       - name: Check nothing changed
         id: modificationCheck
-        run: git diff --exit-code texMaterials/*.bib; tmpExitCode=$?; echo "::set-output name=EXITCODE::$tmpExitCode"
+        run: tmpExitCode=0; git diff --exit-code texMaterials/*.bib || tmpExitCode=$?; echo "::set-output name=EXITCODE::$tmpExitCode"
       # if the bib files were correclty formatted, git diff returns 0, and none of the following steps are executed
       - name: Create patch
         if: steps.modificationCheck.outputs.EXITCODE != 0
