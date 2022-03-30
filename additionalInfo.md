@@ -11,8 +11,8 @@
 * `TikZ` figures can be build with `make fig_tikz`
 * `make clean` cleans temporary files from the tex build as well as the `TikZ` folders, but *NOT* the python figures
 * `make cleanall` also removes the python figures as well, and the `main.pdf`
-* `make lint_tex` lints the tex files
-* `make lint_bib` lints the bib file (with [`bibtex-tidy`](https://github.com/FlamingTempura/bibtex-tidy))
+* `make lint_tex` lints the tex files (with [`ChkTeX`](https://www.nongnu.org/chktex/), included in [`TeXLive`](https://www.tug.org/texlive/))
+* `make lint_bib` lints the bib file (with [`bibtex-tidy`](https://github.com/FlamingTempura/bibtex-tidy), see there for [installation instruction](https://github.com/FlamingTempura/bibtex-tidy#cli))
 
 
 ### `gridspeccer` alternative
