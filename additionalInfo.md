@@ -113,6 +113,7 @@ Requirements:
 * Installing `languagetool` (e.g., with `sudo pacman -S languagetool`) and [`YaLaFi`](https://github.com/matze-dd/YaLafi#installation)
 * `YaLaFi` needs the `docdef=atom` option for the `glossaries-extra` package, as well as the `poorman` option for `cleveref`, plus a file that for me lies in `~/.config/vlty/defs.tex` and [can be found online](https://github.com/JulianGoeltz/myConfigFiles/blob/master/other_configs/vlty_defs.tex), currently:
   ```
+  \LTinput{main.tex}
   \LTinput{main.glsdefs}
   \YYCleverefInput{main.sed}
   ```
