@@ -19,7 +19,7 @@ jobs:
     container:
       image: danteev/texlive
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Install dependencies
@@ -32,7 +32,7 @@ jobs:
         run: |
           make fig_python
       - name: 'Upload PDFs as artifacts'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: compiledFigPDFs
           path: fig/*.pdf
@@ -47,11 +47,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       # download archived fig pdfs
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: compiledFigPDFs
           path: fig/
@@ -61,7 +61,7 @@ jobs:
         run: make
 
       - name: 'Upload main PDF as artifact'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: compiledPDF
           path: |
