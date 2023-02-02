@@ -19,8 +19,8 @@ Additionally, [the gridspeccer](https://github.com/gridspeccer/gridspeccer) proj
 `gridspeccer` has a lot of flexibilities while enabling adaptions in a quick and straightforward manner; however, it is no requirement if you don't need plots, [or use alternative plotting methods](additionalInfo.md#gridspeccer-alternative).
 
 This template is most useful for scientific papers, and was used, e.g., for
-* Fast and deep: energy-efficient neuromorphic learning with first-spike times; J. Göltz∗, L. Kriener∗, A. Baumbach, S. Billaudelle, O. Breitwieser, B. Cramer, D. Dold, A. F. Kungl, W. Senn, J. Schemmel, K. Meier, M. A. Petrovici; [*Nature Machine Intelligence*, 3(9), 823-835.](https://www.nature.com/articles/s42256-021-00388-x) preprint at https://arxiv.org/abs/1912.11443
-* Haider, P., Ellenberger, B., Kriener, L., Jordan, J., Senn, W., & Petrovici, M.A. (2021). Latent Equilibrium: A unified learning theory for arbitrarily fast computation with arbitrarily slow neurons. preprint at https://arxiv.org/abs/2110.14549
+* Göltz, J.∗, Kriener, L.∗, Baumbach, A., Billaudelle, S., Breitwieser, O., Cramer, B., ... & Petrovici, M. A. (2021). Fast and energy-efficient neuromorphic deep learning with first-spike times. [*Nature Machine Intelligence*, 3(9), 823-835.](https://www.nature.com/articles/s42256-021-00388-x), 3(9), 823-835. preprint at https://arxiv.org/abs/1912.11443
+* Haider, P., Ellenberger, B., Kriener, L., Jordan, J., Senn, W., & Petrovici, M. A. (2021). Latent equilibrium: A unified learning theory for arbitrarily fast computation with arbitrarily slow neurons. [*Advances in Neural Information Processing Systems*](https://papers.nips.cc/paper/2021/hash/94cdbdb84e8e1de8a725fa2ed61498a4-Abstract.html), 34, 17839-17851. preprint at https://arxiv.org/abs/2110.14549
 
 ## Build instruction
 ### On GitHub
