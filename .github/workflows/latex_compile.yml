@@ -17,7 +17,7 @@ jobs:
   buildPython:
     runs-on: ubuntu-latest
     container:
-      image: danteev/texlive
+      image: texlive/texlive
     steps:
       - uses: actions/checkout@v3
         with:
@@ -42,7 +42,7 @@ jobs:
     # only run after python figures are done
     needs: buildPython
     container:
-      image: danteev/texlive
+      image: texlive/texlive
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
