@@ -17,7 +17,7 @@ jobs:
     container:
       image: texlive/texlive
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
           submodules: true
       - name: update apt-get
