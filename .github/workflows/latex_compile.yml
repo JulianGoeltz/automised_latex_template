@@ -26,6 +26,7 @@ jobs:
           pwd
           ls -lAh
           git --version
+          git config --global --add safe.directory /__w/automised_latex_template/automised_latex_template
           which git
           echo $USER
           touch blablabla
