@@ -20,11 +20,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: clone other repository
-        run: |
-          cd ..
-          git clone --branch=debug_GHactions https://github.com/JulianGoeltz/automised_latex_template temp
-          diff --recursive --exclude "objects" temp automised_latex_template
       - name: debug the (later) save step
         run: |
           ls **/*.pdf || true
@@ -38,7 +33,6 @@ jobs:
           ls -lAh .git
           cat .git/HEAD
           git init
-          git config --list --system
           git config --list --global
           git config --list --local
           git config user.name github-actions
