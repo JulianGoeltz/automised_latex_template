@@ -17,31 +17,9 @@ jobs:
     container:
       image: texlive/texlive
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
-      - name: debug the (later) save step
-        run: |
-          ls **/*.pdf || true
-          pwd
-          ls -lAh
-          git --version
-          git config --global --add safe.directory /__w/automised_latex_template/automised_latex_template
-          which git
-          echo $USER
-          touch blablabla
-          ls -lAh blablabla
-          ls -lAh .git
-          cat .git/HEAD
-          git init
-          git config --list
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add -f main.pdf
-          git add -f fig/*.pdf || true
-          git add -f fig_tikz/fig*/*.pdf || true
-          git checkout -b compiledPDF
-          git commit -m "new pdfs"
       - name: update apt-get
         run: apt-get update
       - name: install build-essential, python3-dev, python3-full, python3-venv
@@ -105,9 +83,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           ls **/*.pdf || true
-          pwd
-          ls -lAh
-          git --version
+          git config --global --add safe.directory $PWD
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add -f main.pdf
