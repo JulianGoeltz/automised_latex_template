@@ -33,6 +33,7 @@ jobs:
           ls -lAh .git
           cat .git/HEAD
           git init
+          cat $(which git)
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add -f main.pdf
