@@ -79,6 +79,19 @@ jobs:
             fig_tikz/**/*.pdf
             main.pdf
       # push to other branch for retainig the pdfs
+      - name: debug the save step
+        run: |
+          ls **/*.pdf || true
+          pwd
+          ls -lAh
+          git --version
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add -f main.pdf
+          git add -f fig/*.pdf || true
+          git add -f fig_tikz/fig*/*.pdf || true
+          git checkout -b compiledPDF
+          git commit -m "new pdfs"
       - name: save all stuff online
         if: github.ref == 'refs/heads/main'
         run: |
