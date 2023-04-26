@@ -47,7 +47,8 @@ jobs:
           which git
           echo $USER
           touch blablabla
-          la -lAh blablabla
+          ls -lAh blablabla
+          ls -lAh .git
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add -f main.pdf
