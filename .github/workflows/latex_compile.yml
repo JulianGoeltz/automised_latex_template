@@ -78,6 +78,42 @@ jobs:
           path: |
             fig_tikz/**/*.pdf
             main.pdf
+
+      # if run scheduled, check if there are any changes to the 'compiledpdf' build
+      - name: diff-pdf; install
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          apt-get update
+          apt-get install -y make automake g++
+          apt-get install -y libpoppler-glib-dev poppler-utils libwxgtk3.2-dev
+          git clone https://github.com/vslavik/diff-pdf
+          cd diff-pdf
+          ./bootstrap
+          ./configure
+          make
+          make install
+      - name: diff-pdf; get ground truth and compare
+        if: ${{ github.event_name == 'schedule' }}
+        id: diffingPDFs
+        continue-on-error: true
+        run: |
+          git config --global --add safe.directory $PWD
+          git fetch origin compiledPDF
+          git show FETCH_HEAD:main.pdf > compiledPDF_main.pdf
+          make comparePDF
+      - name: diff-pdf; upload diff
+        if: steps.diffingPDFs.outcome == 'failure'
+        uses: actions/upload-artifact@v3
+        with:
+          name: comparePDF_diff
+          path: diff_main_compiledPDF.pdf
+      - name: diff-pdf; fail if difference is detected
+        if: steps.diffingPDFs.outcome == 'failure'
+        run: |
+          echo "Previous step diffingPDFs detected differences in the pdf."
+          echo "Check the artifact 'comparePDF_diff' for the differences."
+          exit 1
+
       # push to other branch for retainig the pdfs
       - name: save all stuff online
         if: github.ref == 'refs/heads/main'

@@ -108,5 +108,12 @@ check-and-reinit-submodules:
 languagecheck:
 	python -m yalafi.shell --lt-command languagetool --define ~/.config/vlty/defs.tex --equation-punctuation display --packages "*" --include --language en-US main.tex | sed -Ez 's/===\n[0-9]+\.\)/===\n.)/gm' > texMaterials/.languagetool_state.tmp && mv texMaterials/.languagetool_state.tmp texMaterials/.languagetool_state
 
+# get the current 'ground truth' pdf as a specific file
+compiledPDF_main.pdf:
+	git show compiledPDF:main.pdf > compiledPDF_main.pdf
+# compare PDFs and save differences
+comparePDF: main.pdf compiledPDF_main.pdf
+	diff-pdf --mark-differences --skip-identical --grayscale --output-diff=diff_main_compiledPDF.pdf main.pdf compiledPDF_main.pdf
 
-.PHONY: all main.pdf cleanall clean fig_tikz fig_tikz_clean fig_python_clean lint_tex check-and-reinit-submodules languagecheck
+
+.PHONY: all main.pdf cleanall clean fig_tikz fig_tikz_clean fig_python_clean lint_tex check-and-reinit-submodules languagecheck comparePDF
