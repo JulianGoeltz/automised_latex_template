@@ -6,9 +6,7 @@ name: Linter
 # events but only for the main branch
 on:
   push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
   schedule:
     - cron: "0 0 * * 1"
 
@@ -43,13 +41,14 @@ jobs:
         run: make lint_bib
       - name: Check nothing changed
         id: modificationCheck
-        run: tmpExitCode=0; git diff --exit-code texMaterials/*.bib || tmpExitCode=$?; echo "::set-output name=EXITCODE::$tmpExitCode"
-      # if the bib files were correclty formatted, git diff returns 0, and none of the following steps are executed
+        continue-on-error: true
+        run: git diff --exit-code texMaterials/*.bib
+      # if the bib files were correctly formatted, git diff returns 0, and none of the following steps are executed
       - name: Create patch
-        if: steps.modificationCheck.outputs.EXITCODE != 0
+        if: steps.modificationCheck.outcome == 'failure'
         run: git diff texMaterials/*.bib > bibfilemodification.patch
       - name: 'Upload tidied bibtex files and patch as artifacts'
-        if: steps.modificationCheck.outputs.EXITCODE != 0
+        if: steps.modificationCheck.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: tidiedBibFiles
@@ -57,5 +56,8 @@ jobs:
             texMaterials/*.bib
             bibfilemodification.patch
       - name: Check nothing changed
-        if: steps.modificationCheck.outputs.EXITCODE != 0
-        run: echo "unstashed changes in texMaterials/*.bib, format your bib file before comitting (tidied as well as patch are provided in artifact, which is accessible in the summary (see top left))"; exit 1
+        if: steps.modificationCheck.outcome == 'failure'
+        run: |
+          echo "Unstashed changes in texMaterials/*.bib, format your bib file before comitting"
+          echo "Tidied bib as well as patch are provided as an artifact, which is accessible in the summary"
+          exit 1
