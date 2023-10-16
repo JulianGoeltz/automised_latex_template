@@ -9,6 +9,7 @@ on:
   pull_request:
   schedule:
     - cron: "0 0 * * 1"
+  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -61,6 +62,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
+      - name: get short SHA
+        # for having the short SHA available later
+        id: vars
+        run: echo "sha_short=$( echo ${{ github.event.pull_request.head.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
       # download archived fig pdfs
       - uses: actions/download-artifact@v3
         with:
@@ -81,7 +86,7 @@ jobs:
 
       # if run scheduled, check if there are any changes to the 'compiledpdf' build
       - name: diff-pdf; install
-        if: ${{ github.event_name == 'schedule' }}
+        if: ${{ (github.event_name == 'schedule') || (github.event_name == 'pull_request') || (github.event_name == 'workflow_dispatch') }}
         run: |
           apt-get update
           apt-get install -y make automake g++
@@ -93,7 +98,7 @@ jobs:
           make
           make install
       - name: diff-pdf; get ground truth and compare
-        if: ${{ github.event_name == 'schedule' }}
+        if: ${{ (github.event_name == 'schedule') || (github.event_name == 'pull_request') || (github.event_name == 'workflow_dispatch') }}
         id: diffingPDFs
         continue-on-error: true
         run: |
@@ -108,15 +113,26 @@ jobs:
           name: comparePDF_diff
           path: diff_main_compiledPDF.pdf
       - name: diff-pdf; fail if difference is detected
-        if: steps.diffingPDFs.outcome == 'failure'
+        if: ${{ (steps.diffingPDFs.outcome == 'failure') && ((github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch')) }}
         run: |
           echo "Previous step diffingPDFs detected differences in the pdf."
           echo "Check the artifact 'comparePDF_diff' for the differences."
           exit 1
+      - name: diff-pdf; if PR, post to PR thread
+        if: ${{ (steps.diffingPDFs.outcome == 'failure') && (github.event_name == 'pull_request') }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'This PR (latest commit [`${{ steps.vars.outputs.sha_short }}`](${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.number }}/commits/${{ github.event.pull_request.head.sha }})) produces a change compared to the current `HEAD`. \nCheck the artifact of the run, probably at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            })
 
       # push to other branch for retainig the pdfs
       - name: save all stuff online
-        if: github.ref == 'refs/heads/main'
+        if: ${{ (github.ref == 'refs/heads/main') && (github.event_name == 'push') }}
         run: |
           ls **/*.pdf || true
           git config --global --add safe.directory $PWD
