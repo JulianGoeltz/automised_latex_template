@@ -84,13 +84,16 @@ However, at time of writing 2000mins are available each month, so with an averag
 As a precaution for the storage, you can reduce the time builds are available as this might help.
 
 ### Applying `changes`
-If you use the `changes` package and want to apply the changes, I find the following very helpful.
-Works with multilines and when there are curly brackets in the changes; but might introduce empty lines where they are not wanted.
+If you use the `changes` package and want to apply the changes, I find the following very helpful (**only apply if you know roughly what the commands do, and when you can revert changes**).
+* works with multilines
+* works with commands (curly brackets) inside the changes
+* works with `[id=authorid]`
+* but might introduce empty lines where they are not wanted
 ```
 bracket_pattern='((([^{}]|\n)*\{([^{}]|\n)*\})*([^{}]|\n)*)'
-sed -i -Ez 's/\\replaced\{'$bracket_pattern'\}\n*\{'$bracket_pattern'\}/\1/gm' **/*.tex
-sed -i -Ez 's/\\added\{'$bracket_pattern'\}/\1/gm' **/*.tex
-sed -i -Ez 's/\\deleted\{'$bracket_pattern'\}//gm' **/*.tex
+sed -i -Ez 's/\\replaced(\[[^]]*]|)\{'$bracket_pattern'\}\n*\{'$bracket_pattern'\}/\2/gm' **/*.tex
+sed -i -Ez 's/\\added(\[[^]]*]|)\{'$bracket_pattern'\}/\2/gm' **/*.tex
+sed -i -Ez 's/\\deleted(\[[^]]*]|)\{'$bracket_pattern'\}//gm' **/*.tex
 ```
 ### Deleting comments
 The following should delete comments:
