@@ -26,7 +26,9 @@ This template is most useful for scientific papers, and was used, e.g., for
 ### On GitHub
 When adhering to [the repo structure](additionalInfo.md#repository-structure), the [workflows](additionalInfo.md#github-actions) will build the document automatically.
 
-At the end of the GitHub Action that compiles the `pdf`, this `pdf` is pushed to the repository in a special branch, which requires write permissions. This permission is set in `Settings->Actions` in your repository, unfortunately the default setting only includes read permissions therefore the compile action will fail until you change this.
+> [!IMPORTANT]  
+> At the end of the GitHub Action that compiles the `pdf`, this `pdf` is pushed to the repository in a special branch, which requires **Read and write permissions**. This permission is set in `Settings->Actions>General` under `Workflow permissions` in your repository, unfortunately the default setting only includes read permissions therefore the compile action will fail until you change this.
+
 ### On your local machine
 For details see [the detailed build information](additionalInfo.md#local-build-instruction), but as a quick guide:
 after installing the requirements with `pip install -r requirements.txt` (ideally in a [`venv`](https://docs.python.org/3/library/venv.html)), `make fig_python && make` builds the manuscript.
