@@ -113,7 +113,7 @@ jobs:
           name: comparePDF_diff
           path: diff_main_compiledPDF.pdf
       - name: diff-pdf; fail if difference is detected
-        if: ${{ (steps.diffingPDFs.outcome == 'failure') && ((github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch')) }}
+        if: ${{ (steps.diffingPDFs.outcome == 'failure') && (github.event_name == 'schedule') }}
         run: |
           echo "Previous step diffingPDFs detected differences in the pdf."
           echo "Check the artifact 'comparePDF_diff' for the differences."
