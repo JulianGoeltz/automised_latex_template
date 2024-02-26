@@ -132,7 +132,7 @@ jobs:
 
       # push to other branch for retainig the pdfs
       - name: save all stuff online
-        if: ${{ (github.ref == 'refs/heads/main') && (github.event_name == 'push') }}
+        if: ${{ (github.ref == 'refs/heads/main') && ((github.event_name == 'push') || (github.event_name == 'workflow_dispatch')) }}
         run: |
           ls **/*.pdf || true
           git config --global --add safe.directory $PWD
