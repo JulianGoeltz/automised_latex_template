@@ -84,7 +84,7 @@ jobs:
             fig_tikz/**/*.pdf
             main.pdf
 
-      # if run scheduled, check if there are any changes to the 'compiledpdf' build
+      # check if there are any changes to the 'compiledpdf' build (for scheduled, dispatched, and PR runs)
       - name: diff-pdf; install
         if: ${{ (github.event_name == 'schedule') || (github.event_name == 'pull_request') || (github.event_name == 'workflow_dispatch') }}
         run: |
