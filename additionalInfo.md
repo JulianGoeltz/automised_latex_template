@@ -33,6 +33,11 @@ Make sure you are on the current version with `git pull`, and also that you are 
 ```zsh
 git restore --source=origin/compiledPDF -- "fig/fig*.pdf" "fig_tikz/fig*/*.pdf"
 ```
+As an alternative version, one can checkout the `compiledPDF` branch, extract the figure files, go back to the `main` branch and extract the figures.
+In a clean repository this is done by:
+```bash
+git pull && git checkout compiledPDF && tar -cf temp.tar fig/.pdf fig_tikz/*/*.pdf && git checkout main && tar -xf --overwrite temp.tar
+```
 ### `TikZ` diagrams
 The are simple `.tex` files located in the `fig_tikz` subfolder, and they can be build with `pdflatex` for example.
 For easy use, the build instruction is in the `Makefile`, so typing `make fig_tikz` builds the intro figure and any you add.
