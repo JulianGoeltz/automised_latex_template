@@ -7,22 +7,35 @@ jobs:
   buildPython:
     runs-on: ubuntu-latest
     container:
-      image: danteev/texlive
+      image: texlive/texlive
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Install dependencies
+      - name: update apt-get
+        run: apt-get update
+      - name: install build-essential, python3-dev, python3-full, python3-venv
         run: |
-          apt-get update
-          apt-get install -y python3-pip
+          apt-get install -y build-essential
+          apt-get install -y python3-dev
+          apt-get install -y python3-full
+          apt-get install -y python3-venv
+      - name: create venv
+        run: python3 -m venv venv
+      - name: update pip in venv
+        run: |
+          . venv/bin/activate
           python3 -m pip install --upgrade pip
+      - name: install requirements into venv
+        run: |
+          . venv/bin/activate
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Make the plots
         run: |
+          . venv/bin/activate
           make fig_python
       - name: 'Upload PDFs as artifacts'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: compiledFigPDFs
           path: fig/*.pdf
@@ -32,16 +45,16 @@ jobs:
     # only run after python figures are done
     needs: buildPython
     container:
-      image: danteev/texlive
+      image: texlive/texlive
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
       # download archived fig pdfs
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: compiledFigPDFs
           path: fig/
@@ -51,7 +64,7 @@ jobs:
         run: make
 
       - name: 'Upload main PDF as artifact'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: compiledPDF
           path: |
@@ -61,28 +74,43 @@ jobs:
     runs-on: ubuntu-latest
     needs: buildPdf
     container:
-      image: danteev/texlive
+      image: texlive/texlive
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
+      - name: update apt-get
+        run: apt-get update
+      - name: install build-essential, python3-dev, python3-full, python3-venv
+        run: |
+          apt-get install -y build-essential
+          apt-get install -y python3-dev
+          apt-get install -y python3-full
+          apt-get install -y python3-venv
+      - name: create venv
+        run: python3 -m venv venv
+      - name: update pip in venv
+        run: |
+          . venv/bin/activate
+          python3 -m pip install --upgrade pip
       - name: Install arxiv-collector
         run: |
-          python3 -m pip install --upgrade pip
+          . venv/bin/activate
           python3 -m pip install --upgrade arxiv-collector
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: compiledFigPDFs
           path: fig/
       - name: create tarball (adds additional bbl files)
         run: |
+          . venv/bin/activate
           make
           arxiv-collector main.tex
           gunzip arxiv.tar.gz
           tar uf arxiv.tar main*.bbl
           gzip arxiv.tar
       - name: 'Upload tarball as artifact'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: tarball
           path: |
