@@ -21,6 +21,9 @@ Additionally, [the gridspeccer](https://github.com/gridspeccer/gridspeccer) proj
 This template is most useful for scientific papers, and was used, e.g., for
 * Göltz, J.∗, Kriener, L.∗, Baumbach, A., Billaudelle, S., Breitwieser, O., Cramer, B., ... & Petrovici, M. A. (2021). Fast and energy-efficient neuromorphic deep learning with first-spike times. [*Nature Machine Intelligence*, 3(9), 823-835.](https://www.nature.com/articles/s42256-021-00388-x), 3(9), 823-835. preprint at https://arxiv.org/abs/1912.11443
 * Haider, P., Ellenberger, B., Kriener, L., Jordan, J., Senn, W., & Petrovici, M. A. (2021). Latent equilibrium: A unified learning theory for arbitrarily fast computation with arbitrarily slow neurons. [*Advances in Neural Information Processing Systems*](https://papers.nips.cc/paper/2021/hash/94cdbdb84e8e1de8a725fa2ed61498a4-Abstract.html), 34, 17839-17851. preprint at https://arxiv.org/abs/2110.14549
+* Ellenberger, B.∗, Haider, P.∗, Jordan, J., Max, K., Jaras, I., Kriener, L., ... & Petrovici, M. A. (2024). Backpropagation through space, time, and the brain. preprint at https://arxiv.org/abs/2403.16933.
+* Göltz, J.∗, Weber, J.∗, Kriener, L.∗, Lake, P., Payvand, M., & Petrovici, M. A. (2024). DelGrad: Exact gradients in spiking networks for learning transmission delays and weights. preprint at https://arxiv.org/abs/2404.19165.
+* Kriener, L.∗, Völk, K.∗, von Hünerbein, B., Benitez, F., Senn, W., & Petrovici, M. A. (2024). ELiSe: Efficient Learning of Sequences in Structured Recurrent Networks. preprint at https://arxiv.org/abs/2402.16763.
 
 ## Build instruction
 ### On GitHub
