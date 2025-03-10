@@ -20,7 +20,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -32,7 +32,7 @@ jobs:
   lintBib:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
       - name: Install bibtex-tidy
@@ -49,7 +49,7 @@ jobs:
         run: git diff texMaterials/*.bib > bibfilemodification.patch
       - name: 'Upload tidied bibtex files and patch as artifacts'
         if: steps.modificationCheck.outcome == 'failure'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: tidiedBibFiles
           path: |
