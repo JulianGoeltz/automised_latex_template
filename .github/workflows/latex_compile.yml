@@ -16,7 +16,7 @@ jobs:
   buildPython:
     runs-on: ubuntu-latest
     container:
-      image: texlive/texlive
+      image: registry.gitlab.com/islandoftex/images/texlive:TL2025-2025-05-11-full
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,7 +54,7 @@ jobs:
     # only run after python figures are done
     needs: buildPython
     container:
-      image: texlive/texlive
+      image: registry.gitlab.com/islandoftex/images/texlive:TL2025-2025-05-11-full
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
