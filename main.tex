@@ -175,6 +175,17 @@
 \FloatBarrier
 \clearpage
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SUPPLEMENTS
+\appendix
+% reset equation counter at each section
+\counterwithin*{figure}{section}
+\counterwithin*{table}{section}
+\counterwithin*{equation}{section}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+\renewcommand{\figurename}{Supplementary Figure}
+\renewcommand{\tablename}{Supplementary Table}
+
 \section*{Supplementary Information}
 \glsresetall{}
 % to have seperate bibliography for appendix
