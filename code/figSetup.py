@@ -328,4 +328,4 @@ def plot_psp_shapes(ax):
     ax.set_xlabel("time [a. u.]")
     ax.xaxis.set_label_coords(.5, -0.075)
 
-    ax.legend(frameon=False)
+    # ax.legend(frameon=False)
