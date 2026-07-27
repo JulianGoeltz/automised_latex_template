@@ -39,6 +39,10 @@ jobs:
         run: |
           . venv/bin/activate
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: minimal plot
+        run: |
+          . venv/bin/activate
+          python code/minimalFig.py
       - name: Make the plots
         run: |
           . venv/bin/activate
